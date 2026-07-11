@@ -33,65 +33,55 @@
     flex-shrink: 0;
     background: var(--sidebar);
     color: var(--sidebar-text);
-    padding: 32px 0;
+    padding: 28px 0;
     position: sticky;
     top: 0;
     height: 100vh;
     overflow-y: auto;
   }
   .brand {
-    padding: 0 26px 28px;
+    padding: 0 26px 24px;
     border-bottom: 1px solid rgba(255,255,255,0.08);
-    margin-bottom: 18px;
+    margin-bottom: 14px;
   }
-  .brand h1 {
-    font-size: 1.25rem;
-    color: #fff;
-    letter-spacing: -0.3px;
-  }
-  .brand p {
-    margin-top: 6px;
-    font-size: 0.78rem;
-    color: #8f97a6;
-  }
-  .nav-group { margin-bottom: 4px; }
+  .brand h1 { font-size: 1.2rem; color: #fff; letter-spacing: -0.3px; }
+  .brand p { margin-top: 6px; font-size: 0.76rem; color: #8f97a6; }
+  .nav-group { margin-bottom: 2px; }
   .nav-head {
     display: flex;
     align-items: center;
     gap: 10px;
-    padding: 12px 26px;
+    padding: 11px 26px;
     cursor: pointer;
-    font-size: 0.95rem;
+    font-size: 0.92rem;
     font-weight: 600;
     color: #fff;
     transition: background 0.15s ease;
   }
   .nav-head:hover { background: var(--sidebar-hover); }
+  .nav-head.current { background: var(--sidebar-hover); }
   .nav-head .num {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 22px;
-    height: 22px;
+    width: 21px;
+    height: 21px;
     border-radius: 6px;
     background: var(--accent);
     color: #fff;
-    font-size: 0.75rem;
+    font-size: 0.72rem;
     font-weight: 700;
+    flex-shrink: 0;
   }
   .nav-head .chev {
     margin-left: auto;
-    font-size: 0.7rem;
+    font-size: 0.68rem;
     color: #8f97a6;
     transition: transform 0.2s ease;
   }
   .nav-group.open .nav-head .chev { transform: rotate(90deg); }
-  .nav-sub {
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.25s ease;
-  }
-  .nav-group.open .nav-sub { max-height: 300px; }
+  .nav-sub { max-height: 0; overflow: hidden; transition: max-height 0.25s ease; }
+  .nav-group.open .nav-sub { max-height: 400px; }
   .nav-sub button {
     display: block;
     width: 100%;
@@ -99,45 +89,30 @@
     background: none;
     border: none;
     color: var(--sidebar-text);
-    font-size: 0.87rem;
-    padding: 9px 26px 9px 54px;
+    font-size: 0.83rem;
+    padding: 8px 26px 8px 52px;
     cursor: pointer;
     transition: background 0.15s ease, color 0.15s ease;
   }
   .nav-sub button:hover { background: var(--sidebar-hover); color: #fff; }
-  .nav-sub button.active {
-    background: var(--sidebar-hover);
-    color: var(--accent);
-    font-weight: 600;
-  }
+  .nav-sub button.active { background: var(--sidebar-hover); color: var(--accent); font-weight: 600; }
 
   /* ---------- Main ---------- */
-  main {
-    flex: 1;
-    padding: 48px 56px;
-    max-width: 980px;
-  }
+  main { flex: 1; padding: 44px 52px; max-width: 1000px; }
   .hero {
     background: linear-gradient(135deg, #2c3e50 0%, #4a6b5a 100%);
     color: #fff;
     border-radius: 20px;
-    padding: 40px 44px;
-    margin-bottom: 36px;
+    padding: 36px 40px;
+    margin-bottom: 32px;
   }
-  .hero h2 {
-    font-size: 1.6rem;
-    font-weight: 700;
-    line-height: 1.4;
-  }
-  .hero p {
-    margin-top: 10px;
-    color: rgba(255,255,255,0.75);
-    font-size: 0.92rem;
-  }
+  .hero h2 { font-size: 1.5rem; font-weight: 700; line-height: 1.4; }
+  .hero p { margin-top: 8px; color: rgba(255,255,255,0.75); font-size: 0.9rem; }
+
   .section-title {
-    font-size: 1.15rem;
+    font-size: 1.1rem;
     font-weight: 700;
-    margin: 30px 0 16px;
+    margin: 28px 0 14px;
     display: flex;
     align-items: center;
     gap: 8px;
@@ -145,83 +120,133 @@
   .section-title .badge {
     background: var(--accent);
     color: #fff;
-    font-size: 0.72rem;
+    font-size: 0.7rem;
     padding: 3px 9px;
     border-radius: 20px;
     font-weight: 700;
   }
   .grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
-    gap: 16px;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 14px;
   }
   .card {
     background: var(--card);
     border: 1px solid var(--border);
     border-radius: 16px;
-    padding: 24px 22px;
+    padding: 22px 20px;
     cursor: pointer;
     transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
   }
-  .card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 10px 24px rgba(0,0,0,0.07);
-    border-color: var(--accent);
-  }
-  .card .icon { font-size: 1.6rem; margin-bottom: 10px; display: block; }
-  .card h3 { font-size: 1rem; margin-bottom: 4px; }
-  .card p { font-size: 0.82rem; color: var(--muted); }
+  .card:hover { transform: translateY(-4px); box-shadow: 0 10px 24px rgba(0,0,0,0.07); border-color: var(--accent); }
+  .card .icon { font-size: 1.5rem; margin-bottom: 8px; display: block; }
+  .card h3 { font-size: 0.98rem; margin-bottom: 4px; }
+  .card p { font-size: 0.8rem; color: var(--muted); }
 
   /* leaf pages */
   .leaf { display: none; }
   .leaf.active { display: block; }
   .leaf .back {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    color: var(--accent);
-    background: none;
-    border: none;
-    font-size: 0.88rem;
-    cursor: pointer;
-    margin-bottom: 22px;
+    display: inline-flex; align-items: center; gap: 6px;
+    color: var(--accent); background: none; border: none;
+    font-size: 0.87rem; cursor: pointer; margin-bottom: 20px;
   }
-  .leaf .page-header {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    margin-bottom: 24px;
-  }
+  .leaf .page-header { display: flex; align-items: center; gap: 14px; margin-bottom: 22px; }
   .leaf .page-header .icon-big {
-    font-size: 2rem;
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 14px;
-    width: 56px;
-    height: 56px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    font-size: 1.9rem; background: var(--card); border: 1px solid var(--border);
+    border-radius: 14px; width: 54px; height: 54px;
+    display: flex; align-items: center; justify-content: center; flex-shrink: 0;
   }
-  .leaf .page-header h2 { font-size: 1.4rem; }
-  .leaf .page-header span.crumb { color: var(--muted); font-size: 0.85rem; }
+  .leaf .page-header h2 { font-size: 1.35rem; }
+  .leaf .page-header span.crumb { color: var(--muted); font-size: 0.84rem; }
   .content-block {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    padding: 26px 28px;
-    line-height: 1.75;
-    color: #4b4a45;
-    font-size: 0.93rem;
+    background: var(--card); border: 1px solid var(--border); border-radius: 16px;
+    padding: 24px 26px; line-height: 1.75; color: #4b4a45; font-size: 0.92rem;
   }
+  .content-block + .content-block { margin-top: 14px; }
 
   .view { display: none; }
   .view.active { display: block; }
 
+  /* ---------- Daily Log (interactive) ---------- */
+  .log-wrap { display: grid; grid-template-columns: 1.3fr 1fr; gap: 24px; align-items: start; }
+  .cal-card {
+    background: var(--card); border: 1px solid var(--border); border-radius: 18px; padding: 22px;
+  }
+  .cal-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
+  .cal-header h3 { font-size: 1.05rem; }
+  .cal-nav { display: flex; gap: 6px; }
+  .cal-nav button {
+    border: 1px solid var(--border); background: #fff; border-radius: 8px; width: 30px; height: 30px;
+    cursor: pointer; font-size: 0.9rem; color: var(--text);
+  }
+  .cal-nav button:hover { border-color: var(--accent); color: var(--accent); }
+  .cal-today-btn {
+    border: 1px solid var(--border); background: #fff; border-radius: 8px; padding: 5px 12px;
+    font-size: 0.78rem; cursor: pointer; color: var(--muted);
+  }
+  .cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px; }
+  .cal-dow { text-align: center; font-size: 0.74rem; color: var(--muted); padding: 4px 0 8px; font-weight: 600; }
+  .cal-day {
+    aspect-ratio: 1; border-radius: 10px; border: 1px solid transparent;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    cursor: pointer; font-size: 0.82rem; color: var(--text); position: relative; background: #fbf9f5;
+    gap: 2px;
+  }
+  .cal-day:hover { border-color: var(--accent); }
+  .cal-day.blank { background: transparent; cursor: default; }
+  .cal-day.today { border-color: var(--accent2); font-weight: 700; }
+  .cal-day.selected { background: var(--accent); color: #fff; }
+  .cal-day .mood { font-size: 0.75rem; }
+  .editor-card {
+    background: var(--card); border: 1px solid var(--border); border-radius: 18px; padding: 22px;
+  }
+  .editor-card h4 { font-size: 0.95rem; margin-bottom: 4px; }
+  .editor-card .sel-date { color: var(--muted); font-size: 0.8rem; margin-bottom: 14px; }
+  .mood-row { display: flex; gap: 8px; margin-bottom: 14px; flex-wrap: wrap; }
+  .mood-row button {
+    border: 1px solid var(--border); background: #fff; border-radius: 10px; width: 38px; height: 38px;
+    font-size: 1.1rem; cursor: pointer;
+  }
+  .mood-row button.sel { border-color: var(--accent); background: #fbeee1; }
+  .editor-card textarea {
+    width: 100%; min-height: 80px; border: 1px solid var(--border); border-radius: 10px;
+    padding: 10px 12px; font-size: 0.88rem; font-family: inherit; resize: vertical; margin-bottom: 12px;
+  }
+  .editor-actions { display: flex; gap: 8px; }
+  .btn-primary {
+    background: var(--accent); color: #fff; border: none; border-radius: 8px;
+    padding: 9px 18px; font-size: 0.85rem; cursor: pointer; font-weight: 600;
+  }
+  .btn-ghost {
+    background: none; border: 1px solid var(--border); border-radius: 8px;
+    padding: 9px 18px; font-size: 0.85rem; cursor: pointer; color: var(--muted);
+  }
+  @media (max-width: 760px) { .log-wrap { grid-template-columns: 1fr; } }
+
+  /* ---------- Timeline ---------- */
+  .timeline { position: relative; padding-left: 30px; }
+  .timeline::before {
+    content: ""; position: absolute; left: 8px; top: 6px; bottom: 6px; width: 2px; background: var(--border);
+  }
+  .tl-item { position: relative; margin-bottom: 20px; cursor: pointer; }
+  .tl-item::before {
+    content: ""; position: absolute; left: -30px; top: 4px; width: 14px; height: 14px;
+    border-radius: 50%; background: var(--accent); border: 3px solid var(--bg);
+  }
+  .tl-card {
+    background: var(--card); border: 1px solid var(--border); border-radius: 14px;
+    padding: 18px 20px; transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+  }
+  .tl-item:hover .tl-card { transform: translateX(4px); box-shadow: 0 8px 18px rgba(0,0,0,0.06); border-color: var(--accent); }
+  .tl-card .tl-period { font-size: 0.76rem; color: var(--accent); font-weight: 700; margin-bottom: 4px; }
+  .tl-card h3 { font-size: 1rem; margin-bottom: 4px; }
+  .tl-card p { font-size: 0.83rem; color: var(--muted); }
+
   @media (max-width: 800px) {
     body { flex-direction: column; }
     .sidebar { width: 100%; height: auto; position: relative; }
-    main { padding: 32px 20px; }
+    main { padding: 30px 18px; }
   }
 </style>
 </head>
@@ -230,175 +255,310 @@
 <aside class="sidebar">
   <div class="brand">
     <h1>싱크님의 일상</h1>
-    <p>일상 · 투자 · 은퇴, 그 이후의 삶</p>
+    <p>기록 · 일상 · 관심사 · 투자 · 은퇴</p>
   </div>
 
-  <div class="nav-group open" data-group="g1">
-    <div class="nav-head" data-view="home">
+  <div class="nav-group" data-group="g1">
+    <div class="nav-head" data-view="dailylog">
       <span class="num">1</span>
-      <span>일상의 행복</span>
-      <span class="chev">▶</span>
-    </div>
-    <div class="nav-sub">
-      <button data-target="daily1">1.1 일상의 즐거움</button>
-      <button data-target="daily2">1.2 관심있는 배움</button>
-      <button data-target="daily3">1.3 인조이 더 라이프</button>
+      <span>데일리 로그</span>
     </div>
   </div>
 
-  <div class="nav-group" data-group="g2">
-    <div class="nav-head" data-view="invest">
-      <span class="num">2</span>
-      <span>투자 정보</span>
-      <span class="chev">▶</span>
+  <div class="nav-group open" data-group="g2">
+    <div class="nav-head" data-view="happy">
+      <span class="num">2</span><span>일상의 행복</span><span class="chev">▶</span>
     </div>
     <div class="nav-sub">
-      <button data-target="inv1">2.1 미국 투자</button>
-      <button data-target="inv2">2.2 한국 투자</button>
-      <button data-target="inv3">2.3 중국 투자</button>
-      <button data-target="inv4">2.4 원자재 투자</button>
+      <button data-target="happy1">2.1 품위 있는 즐거움</button>
+      <button data-target="happy2">2.2 인조이더라이프</button>
     </div>
   </div>
 
   <div class="nav-group" data-group="g3">
-    <div class="nav-head" data-view="retire">
-      <span class="num">3</span>
-      <span>은퇴준비</span>
-      <span class="chev">▶</span>
+    <div class="nav-head" data-view="interest">
+      <span class="num">3</span><span>나의 관심사</span><span class="chev">▶</span>
     </div>
     <div class="nav-sub">
-      <button data-target="ret1">3.1 은퇴설계</button>
-      <button data-target="ret2">3.2 2막 준비</button>
-      <button data-target="ret3">3.3 전원 생활</button>
+      <button data-target="interest1">3.1 공부 하는것</button>
+      <button data-target="interest2">3.2 아래는 어떨까?</button>
+    </div>
+  </div>
+
+  <div class="nav-group" data-group="g4">
+    <div class="nav-head" data-view="invest">
+      <span class="num">4</span><span>투자정보</span><span class="chev">▶</span>
+    </div>
+    <div class="nav-sub">
+      <button data-target="inv-safe">4.1 안정자산 투자</button>
+      <button data-target="inv-gold">4.2 금/은투자</button>
+      <button data-target="inv-us">4.3 미국 투자</button>
+      <button data-target="inv-cn">4.4 중국 투자</button>
+      <button data-target="inv-kr">4.5 한국 투자</button>
+    </div>
+  </div>
+
+  <div class="nav-group" data-group="g5">
+    <div class="nav-head" data-view="retire">
+      <span class="num">5</span><span>은퇴준비</span><span class="chev">▶</span>
+    </div>
+    <div class="nav-sub">
+      <button data-target="ret-pension">5.1 연금설계</button>
+      <button data-target="ret-secondact">5.2 2막 인생 준비</button>
+      <button data-target="ret-wish">5.3 은퇴후 하고싶은거..</button>
+    </div>
+  </div>
+
+  <div class="nav-group" data-group="g6">
+    <div class="nav-head" data-view="timeline">
+      <span class="num">6</span><span>타임라인</span><span class="chev">▶</span>
+    </div>
+    <div class="nav-sub">
+      <button data-target="tl-child">6.1 유아기(~2010)</button>
+      <button data-target="tl-youth">6.2 청년기(~2020)</button>
+      <button data-target="tl-adult">6.3 성년기(2021~)</button>
     </div>
   </div>
 </aside>
 
 <main>
 
-  <!-- ===== VIEW: HOME (section 1 overview) ===== -->
-  <div id="view-home" class="view active">
+  <!-- ===== 1. 데일리 로그 (interactive) ===== -->
+  <div id="view-dailylog" class="view">
+    <div class="hero">
+      <h2>데일리 로그</h2>
+      <p>날짜별 짧은 기록 — 오늘 한 일, 기분, 한 줄 메모</p>
+    </div>
+    <div class="log-wrap">
+      <div class="cal-card">
+        <div class="cal-header">
+          <h3 id="calMonthLabel">2026년 7월</h3>
+          <div style="display:flex; gap:8px; align-items:center;">
+            <button class="cal-today-btn" id="calToday">오늘</button>
+            <div class="cal-nav">
+              <button id="calPrev">‹</button>
+              <button id="calNext">›</button>
+            </div>
+          </div>
+        </div>
+        <div class="cal-grid" id="calGrid"></div>
+      </div>
+      <div class="editor-card">
+        <h4>기록 남기기</h4>
+        <div class="sel-date" id="selDateLabel">날짜를 선택하세요</div>
+        <div class="mood-row" id="moodRow">
+          <button data-mood="😊">😊</button>
+          <button data-mood="🙂">🙂</button>
+          <button data-mood="😐">😐</button>
+          <button data-mood="😔">😔</button>
+          <button data-mood="😴">😴</button>
+          <button data-mood="🔥">🔥</button>
+        </div>
+        <textarea id="memoInput" maxlength="120" placeholder="오늘 한 일, 기분을 한 줄로 남겨보세요"></textarea>
+        <div class="editor-actions">
+          <button class="btn-primary" id="saveEntry">저장</button>
+          <button class="btn-ghost" id="deleteEntry">삭제</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== 2. 일상의 행복 ===== -->
+  <div id="view-happy" class="view active">
     <div class="hero">
       <h2>진정한 행복은<br>일상의 행복으로부터...</h2>
-      <p>책, 음악, 배움, 그리고 걷고 떠나고 맛보는 순간들을 기록합니다</p>
+      <p>품위 있게 즐기고, 부지런히 누리는 하루하루의 기록</p>
     </div>
 
-    <div class="section-title"><span class="badge">1.1</span> 일상의 즐거움</div>
+    <div class="section-title"><span class="badge">2.1</span> 품위 있는 즐거움</div>
     <div class="grid">
-      <div class="card" data-target="daily1"><span class="icon">📖</span><h3>책과 함께</h3><p>읽고 있는 책과 서평</p></div>
-      <div class="card" data-target="daily1"><span class="icon">🎵</span><h3>음악과 함께</h3><p>플레이리스트와 공연 후기</p></div>
+      <div class="card" data-target="happy1"><span class="icon">📖</span><h3>책과 함께</h3><p>읽고 있는 책과 서평</p></div>
+      <div class="card" data-target="happy1"><span class="icon">🎵</span><h3>음악과 함께</h3><p>플레이리스트와 공연 후기</p></div>
     </div>
 
-    <div class="section-title"><span class="badge">1.2</span> 관심있는 배움</div>
+    <div class="section-title"><span class="badge">2.2</span> 인조이더라이프</div>
     <div class="grid">
-      <div class="card" data-target="daily2"><span class="icon">🤖</span><h3>AI 스터디</h3><p>공부 기록과 실습 노트</p></div>
-      <div class="card" data-target="daily2"><span class="icon">🚁</span><h3>드론 재미있을까</h3><p>드론 입문 정보와 체험기</p></div>
-    </div>
-
-    <div class="section-title"><span class="badge">1.3</span> 인조이 더 라이프</div>
-    <div class="grid">
-      <div class="card" data-target="daily3"><span class="icon">⛰️</span><h3>산행 정보</h3><p>등산 코스와 준비물</p></div>
-      <div class="card" data-target="daily3"><span class="icon">✈️</span><h3>여행 정보</h3><p>국내외 여행 계획과 후기</p></div>
-      <div class="card" data-target="daily3"><span class="icon">🍜</span><h3>맛집 정보</h3><p>다녀온 맛집과 추천 메뉴</p></div>
+      <div class="card" data-target="happy2"><span class="icon">⛰️</span><h3>산행 정보</h3><p>등산 코스와 준비물</p></div>
+      <div class="card" data-target="happy2"><span class="icon">🚗</span><h3>국내 여행 정보</h3><p>국내 여행 계획과 후기</p></div>
+      <div class="card" data-target="happy2"><span class="icon">✈️</span><h3>해외 여행 정보</h3><p>해외 여행 계획과 후기</p></div>
+      <div class="card" data-target="happy2"><span class="icon">🍜</span><h3>맛집 정보</h3><p>다녀온 맛집과 추천 메뉴</p></div>
     </div>
   </div>
 
-  <!-- ===== VIEW: INVEST (section 2 overview) ===== -->
+  <!-- ===== 3. 나의 관심사 ===== -->
+  <div id="view-interest" class="view">
+    <div class="hero" style="background:linear-gradient(135deg,#3b3b58 0%,#7a5c3b 100%);">
+      <h2>나의 관심사</h2>
+      <p>배우고, 만들고, 길러보는 새로운 즐거움들</p>
+    </div>
+
+    <div class="section-title"><span class="badge">3.1</span> 공부 하는것</div>
+    <div class="grid">
+      <div class="card" data-target="interest1"><span class="icon">🤖</span><h3>AI 스터디</h3><p>공부 기록과 실습 노트</p></div>
+      <div class="card" data-target="interest1"><span class="icon">🚁</span><h3>드론의 재미</h3><p>드론 입문 정보와 체험기</p></div>
+    </div>
+
+    <div class="section-title"><span class="badge">3.2</span> 아래는 어떨까?</div>
+    <div class="grid">
+      <div class="card" data-target="interest2"><span class="icon">🔨</span><h3>공방</h3><p>목공, 공예 등 손으로 만드는 것</p></div>
+      <div class="card" data-target="interest2"><span class="icon">🌳</span><h3>나무키우기</h3><p>분재, 정원수 가꾸기</p></div>
+    </div>
+  </div>
+
+  <!-- ===== 4. 투자정보 ===== -->
   <div id="view-invest" class="view">
     <div class="hero" style="background:linear-gradient(135deg,#2c3e50 0%,#8a6d3b 100%);">
-      <h2>투자 정보</h2>
-      <p>지역별, 자산별 투자 아이디어와 기록을 정리합니다</p>
+      <h2>투자정보</h2>
+      <p>자산을 지키고 불려나가는 기록</p>
     </div>
     <div class="grid">
-      <div class="card" data-target="inv1"><span class="icon">🇺🇸</span><h3>미국 투자</h3><p>미국 주식, ETF 정보</p></div>
-      <div class="card" data-target="inv2"><span class="icon">🇰🇷</span><h3>한국 투자</h3><p>국내 주식, 펀드 정보</p></div>
-      <div class="card" data-target="inv3"><span class="icon">🇨🇳</span><h3>중국 투자</h3><p>중국 시장 동향과 정보</p></div>
-      <div class="card" data-target="inv4"><span class="icon">🛢️</span><h3>원자재 투자</h3><p>금, 원유 등 원자재 정보</p></div>
+      <div class="card" data-target="inv-safe"><span class="icon">🛡️</span><h3>안정자산 투자</h3><p>예금, 채권 등 안전자산 정보</p></div>
+      <div class="card" data-target="inv-gold"><span class="icon">🥇</span><h3>금/은투자</h3><p>귀금속 시장 동향과 정보</p></div>
+      <div class="card" data-target="inv-us"><span class="icon">🇺🇸</span><h3>미국 투자</h3><p>미국 주식, ETF 정보</p></div>
+      <div class="card" data-target="inv-cn"><span class="icon">🇨🇳</span><h3>중국 투자</h3><p>중국 시장 동향과 정보</p></div>
+      <div class="card" data-target="inv-kr"><span class="icon">🇰🇷</span><h3>한국 투자</h3><p>국내 주식, 펀드 정보</p></div>
     </div>
   </div>
 
-  <!-- ===== VIEW: RETIRE (section 3 overview) ===== -->
+  <!-- ===== 5. 은퇴준비 ===== -->
   <div id="view-retire" class="view">
     <div class="hero" style="background:linear-gradient(135deg,#3b3b58 0%,#6b8f7a 100%);">
       <h2>은퇴준비</h2>
-      <p>은퇴 이후의 삶을 미리 그려보고 준비합니다</p>
+      <p>은퇴 이후의 삶을 미리 그려봅니다</p>
     </div>
     <div class="grid">
-      <div class="card" data-target="ret1"><span class="icon">💰</span><h3>은퇴설계</h3><p>재무 계획과 연금 정보</p></div>
-      <div class="card" data-target="ret2"><span class="icon">🌱</span><h3>2막 준비</h3><p>새로운 도전과 계획</p></div>
-      <div class="card" data-target="ret3"><span class="icon">🏡</span><h3>전원 생활</h3><p>전원주택과 시골살이 정보</p></div>
+      <div class="card" data-target="ret-pension"><span class="icon">💰</span><h3>연금설계</h3><p>재무 계획과 연금 정보</p></div>
+      <div class="card" data-target="ret-secondact"><span class="icon">🌱</span><h3>2막 인생 준비</h3><p>새로운 도전과 계획</p></div>
+      <div class="card" data-target="ret-wish"><span class="icon">🏡</span><h3>은퇴후 하고싶은거..</h3><p>버킷리스트와 하고 싶은 일들</p></div>
+    </div>
+  </div>
+
+  <!-- ===== 6. 타임라인 ===== -->
+  <div id="view-timeline" class="view">
+    <div class="hero" style="background:linear-gradient(135deg,#4a3b58 0%,#c9915a 100%);">
+      <h2>타임라인</h2>
+      <p>지나온 시간, 걸어온 길</p>
+    </div>
+    <div class="timeline">
+      <div class="tl-item" data-target="tl-child">
+        <div class="tl-card">
+          <div class="tl-period">~2010</div>
+          <h3>👶 유아기</h3>
+          <p>어린 시절의 기억과 이야기</p>
+        </div>
+      </div>
+      <div class="tl-item" data-target="tl-youth">
+        <div class="tl-card">
+          <div class="tl-period">~2020</div>
+          <h3>🌤️ 청년기</h3>
+          <p>배움과 도전으로 채워진 시간</p>
+        </div>
+      </div>
+      <div class="tl-item" data-target="tl-adult">
+        <div class="tl-card">
+          <div class="tl-period">2021~</div>
+          <h3>🌟 성년기</h3>
+          <p>지금 이 순간, 만들어가는 이야기</p>
+        </div>
+      </div>
     </div>
   </div>
 
   <!-- ===== LEAF PAGES ===== -->
-  <div id="daily1" class="leaf">
-    <button class="back" data-back="home">← 목록으로</button>
-    <div class="page-header"><div class="icon-big">📖</div><div><h2>일상의 즐거움</h2><span class="crumb">1.1 책과 함께 · 음악과 함께</span></div></div>
-    <div class="content-block">
-      <p><strong>책과 함께</strong> — 읽고 있는 책, 인상 깊은 문장, 서평을 기록하는 공간입니다.</p><br>
-      <p><strong>음악과 함께</strong> — 즐겨 듣는 음악과 플레이리스트, 공연 후기를 남기는 공간입니다.</p>
-    </div>
+  <div id="happy1" class="leaf">
+    <button class="back" data-back="happy">← 목록으로</button>
+    <div class="page-header"><div class="icon-big">📖</div><div><h2>품위 있는 즐거움</h2><span class="crumb">2.1 책과 함께 · 음악과 함께</span></div></div>
+    <div class="content-block"><p><strong>책과 함께</strong> — 읽고 있는 책, 인상 깊은 문장, 서평을 기록하는 공간입니다.</p></div>
+    <div class="content-block"><p><strong>음악과 함께</strong> — 즐겨 듣는 음악과 플레이리스트, 공연 후기를 남기는 공간입니다.</p></div>
   </div>
 
-  <div id="daily2" class="leaf">
-    <button class="back" data-back="home">← 목록으로</button>
-    <div class="page-header"><div class="icon-big">🤖</div><div><h2>관심있는 배움</h2><span class="crumb">1.2 AI 스터디 · 드론 재미있을까</span></div></div>
-    <div class="content-block">
-      <p><strong>AI 스터디</strong> — AI 관련 공부 기록, 강의 노트, 실습 프로젝트를 정리하는 공간입니다.</p><br>
-      <p><strong>드론 재미있을까</strong> — 드론 입문 정보와 체험기를 담는 공간입니다.</p>
-    </div>
+  <div id="happy2" class="leaf">
+    <button class="back" data-back="happy">← 목록으로</button>
+    <div class="page-header"><div class="icon-big">🌿</div><div><h2>인조이더라이프</h2><span class="crumb">2.2 산행 · 국내여행 · 해외여행 · 맛집</span></div></div>
+    <div class="content-block"><p><strong>산행 정보</strong> — 등산 코스, 준비물, 다녀온 산 기록을 정리하는 공간입니다.</p></div>
+    <div class="content-block"><p><strong>국내 여행 정보</strong> — 국내 여행 계획과 후기를 남기는 공간입니다.</p></div>
+    <div class="content-block"><p><strong>해외 여행 정보</strong> — 해외 여행 계획과 후기를 남기는 공간입니다.</p></div>
+    <div class="content-block"><p><strong>맛집 정보</strong> — 다녀온 맛집, 추천 메뉴, 위치 정보를 기록하는 공간입니다.</p></div>
   </div>
 
-  <div id="daily3" class="leaf">
-    <button class="back" data-back="home">← 목록으로</button>
-    <div class="page-header"><div class="icon-big">🌿</div><div><h2>인조이 더 라이프</h2><span class="crumb">1.3 산행 · 여행 · 맛집 정보</span></div></div>
-    <div class="content-block">
-      <p><strong>산행 정보</strong> — 등산 코스, 준비물, 다녀온 산 기록을 정리하는 공간입니다.</p><br>
-      <p><strong>여행 정보</strong> — 국내외 여행 계획과 후기를 남기는 공간입니다.</p><br>
-      <p><strong>맛집 정보</strong> — 다녀온 맛집, 추천 메뉴, 위치 정보를 기록하는 공간입니다.</p>
-    </div>
+  <div id="interest1" class="leaf">
+    <button class="back" data-back="interest">← 목록으로</button>
+    <div class="page-header"><div class="icon-big">🤖</div><div><h2>공부 하는것</h2><span class="crumb">3.1 AI 스터디 · 드론의 재미</span></div></div>
+    <div class="content-block"><p><strong>AI 스터디</strong> — AI 관련 공부 기록, 강의 노트, 실습 프로젝트를 정리하는 공간입니다.</p></div>
+    <div class="content-block"><p><strong>드론의 재미</strong> — 드론 입문 정보와 체험기를 담는 공간입니다.</p></div>
   </div>
 
-  <div id="inv1" class="leaf">
+  <div id="interest2" class="leaf">
+    <button class="back" data-back="interest">← 목록으로</button>
+    <div class="page-header"><div class="icon-big">🔨</div><div><h2>아래는 어떨까?</h2><span class="crumb">3.2 공방 · 나무키우기</span></div></div>
+    <div class="content-block"><p><strong>공방</strong> — 목공, 공예 등 손으로 무언가 만드는 활동에 관한 기록 공간입니다.</p></div>
+    <div class="content-block"><p><strong>나무키우기</strong> — 분재, 정원수 등 나무를 가꾸는 이야기를 담는 공간입니다.</p></div>
+  </div>
+
+  <div id="inv-safe" class="leaf">
     <button class="back" data-back="invest">← 목록으로</button>
-    <div class="page-header"><div class="icon-big">🇺🇸</div><div><h2>미국 투자</h2><span class="crumb">2.1 US Market</span></div></div>
+    <div class="page-header"><div class="icon-big">🛡️</div><div><h2>안정자산 투자</h2><span class="crumb">4.1 Safe Assets</span></div></div>
+    <div class="content-block"><p>예금, 채권, MMF 등 안전자산 관련 정보와 투자 아이디어를 기록하는 공간입니다.</p></div>
+  </div>
+
+  <div id="inv-gold" class="leaf">
+    <button class="back" data-back="invest">← 목록으로</button>
+    <div class="page-header"><div class="icon-big">🥇</div><div><h2>금/은투자</h2><span class="crumb">4.2 Gold &amp; Silver</span></div></div>
+    <div class="content-block"><p>금, 은 등 귀금속 시장 동향과 투자 아이디어를 기록하는 공간입니다.</p></div>
+  </div>
+
+  <div id="inv-us" class="leaf">
+    <button class="back" data-back="invest">← 목록으로</button>
+    <div class="page-header"><div class="icon-big">🇺🇸</div><div><h2>미국 투자</h2><span class="crumb">4.3 US Market</span></div></div>
     <div class="content-block"><p>미국 주식, ETF, 시장 동향과 개인적인 투자 아이디어를 기록하는 공간입니다.</p></div>
   </div>
 
-  <div id="inv2" class="leaf">
+  <div id="inv-cn" class="leaf">
     <button class="back" data-back="invest">← 목록으로</button>
-    <div class="page-header"><div class="icon-big">🇰🇷</div><div><h2>한국 투자</h2><span class="crumb">2.2 KR Market</span></div></div>
-    <div class="content-block"><p>국내 주식, 펀드, 시장 동향과 개인적인 투자 아이디어를 기록하는 공간입니다.</p></div>
-  </div>
-
-  <div id="inv3" class="leaf">
-    <button class="back" data-back="invest">← 목록으로</button>
-    <div class="page-header"><div class="icon-big">🇨🇳</div><div><h2>중국 투자</h2><span class="crumb">2.3 CN Market</span></div></div>
+    <div class="page-header"><div class="icon-big">🇨🇳</div><div><h2>중국 투자</h2><span class="crumb">4.4 CN Market</span></div></div>
     <div class="content-block"><p>중국 증시와 관련 산업 동향, 투자 아이디어를 기록하는 공간입니다.</p></div>
   </div>
 
-  <div id="inv4" class="leaf">
+  <div id="inv-kr" class="leaf">
     <button class="back" data-back="invest">← 목록으로</button>
-    <div class="page-header"><div class="icon-big">🛢️</div><div><h2>원자재 투자</h2><span class="crumb">2.4 Commodities</span></div></div>
-    <div class="content-block"><p>금, 은, 원유 등 원자재 시장 동향과 투자 아이디어를 기록하는 공간입니다.</p></div>
+    <div class="page-header"><div class="icon-big">🇰🇷</div><div><h2>한국 투자</h2><span class="crumb">4.5 KR Market</span></div></div>
+    <div class="content-block"><p>국내 주식, 펀드, 시장 동향과 개인적인 투자 아이디어를 기록하는 공간입니다.</p></div>
   </div>
 
-  <div id="ret1" class="leaf">
+  <div id="ret-pension" class="leaf">
     <button class="back" data-back="retire">← 목록으로</button>
-    <div class="page-header"><div class="icon-big">💰</div><div><h2>은퇴설계</h2><span class="crumb">3.1 Retirement Plan</span></div></div>
-    <div class="content-block"><p>재무 계획, 연금, 은퇴 시기에 관한 고민을 정리하는 공간입니다.</p></div>
+    <div class="page-header"><div class="icon-big">💰</div><div><h2>연금설계</h2><span class="crumb">5.1 Pension Plan</span></div></div>
+    <div class="content-block"><p>국민연금, 퇴직연금, 개인연금 등 은퇴 후 현금흐름을 위한 연금 설계를 정리하는 공간입니다.</p></div>
   </div>
 
-  <div id="ret2" class="leaf">
+  <div id="ret-secondact" class="leaf">
     <button class="back" data-back="retire">← 목록으로</button>
-    <div class="page-header"><div class="icon-big">🌱</div><div><h2>2막 준비</h2><span class="crumb">3.2 Second Act</span></div></div>
+    <div class="page-header"><div class="icon-big">🌱</div><div><h2>2막 인생 준비</h2><span class="crumb">5.2 Second Act</span></div></div>
     <div class="content-block"><p>은퇴 이후 하고 싶은 일, 새로운 도전에 대한 기록입니다.</p></div>
   </div>
 
-  <div id="ret3" class="leaf">
+  <div id="ret-wish" class="leaf">
     <button class="back" data-back="retire">← 목록으로</button>
-    <div class="page-header"><div class="icon-big">🏡</div><div><h2>전원 생활</h2><span class="crumb">3.3 Country Life</span></div></div>
-    <div class="content-block"><p>전원 주택, 텃밭, 시골살이에 관한 정보를 담는 공간입니다.</p></div>
+    <div class="page-header"><div class="icon-big">🏡</div><div><h2>은퇴후 하고싶은거..</h2><span class="crumb">5.3 Bucket List</span></div></div>
+    <div class="content-block"><p>은퇴 후 해보고 싶은 일들, 버킷리스트를 자유롭게 적어보는 공간입니다.</p></div>
+  </div>
+
+  <div id="tl-child" class="leaf">
+    <button class="back" data-back="timeline">← 타임라인으로</button>
+    <div class="page-header"><div class="icon-big">👶</div><div><h2>유아기</h2><span class="crumb">6.1 ~2010</span></div></div>
+    <div class="content-block"><p>어린 시절의 기억, 가족과의 이야기, 그 시절의 소중한 순간들을 기록하는 공간입니다.</p></div>
+  </div>
+
+  <div id="tl-youth" class="leaf">
+    <button class="back" data-back="timeline">← 타임라인으로</button>
+    <div class="page-header"><div class="icon-big">🌤️</div><div><h2>청년기</h2><span class="crumb">6.2 ~2020</span></div></div>
+    <div class="content-block"><p>배움과 도전, 성장의 시간들을 되돌아보는 공간입니다.</p></div>
+  </div>
+
+  <div id="tl-adult" class="leaf">
+    <button class="back" data-back="timeline">← 타임라인으로</button>
+    <div class="page-header"><div class="icon-big">🌟</div><div><h2>성년기</h2><span class="crumb">6.3 2021~</span></div></div>
+    <div class="content-block"><p>지금 이 순간부터 만들어가는 이야기를 기록하는 공간입니다.</p></div>
   </div>
 
 </main>
@@ -407,12 +567,21 @@
   const views = document.querySelectorAll('.view');
   const leaves = document.querySelectorAll('.leaf');
   const navGroups = document.querySelectorAll('.nav-group');
+  const navHeads = document.querySelectorAll('.nav-head');
   const subButtons = document.querySelectorAll('.nav-sub button');
+
+  function clearActiveNav() {
+    navHeads.forEach(h => h.classList.remove('current'));
+    subButtons.forEach(b => b.classList.remove('active'));
+  }
 
   function showView(id) {
     views.forEach(v => v.classList.remove('active'));
     leaves.forEach(l => l.classList.remove('active'));
     document.getElementById('view-' + id).classList.add('active');
+    clearActiveNav();
+    const head = document.querySelector('.nav-head[data-view="' + id + '"]');
+    if (head) head.classList.add('current');
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
@@ -420,30 +589,157 @@
     views.forEach(v => v.classList.remove('active'));
     leaves.forEach(l => l.classList.remove('active'));
     document.getElementById(id).classList.add('active');
-    subButtons.forEach(b => b.classList.toggle('active', b.dataset.target === id));
+    clearActiveNav();
+    const btn = document.querySelector('.nav-sub button[data-target="' + id + '"]');
+    if (btn) btn.classList.add('active');
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
-  document.querySelectorAll('.nav-head').forEach(head => {
+  navHeads.forEach(head => {
     head.addEventListener('click', () => {
       const group = head.closest('.nav-group');
-      const isOpen = group.classList.contains('open');
-      navGroups.forEach(g => g.classList.remove('open'));
-      if (!isOpen) group.classList.add('open');
+      const hasSub = group.querySelector('.nav-sub');
+      if (hasSub) {
+        const isOpen = group.classList.contains('open');
+        navGroups.forEach(g => g.classList.remove('open'));
+        if (!isOpen) group.classList.add('open');
+      }
       showView(head.dataset.view);
     });
   });
 
-  document.querySelectorAll('[data-target]').forEach(el => {
-    el.addEventListener('click', (e) => {
+  document.querySelectorAll('.card[data-target], .tl-item[data-target]').forEach(el => {
+    el.addEventListener('click', () => showLeaf(el.dataset.target));
+  });
+
+  subButtons.forEach(btn => {
+    btn.addEventListener('click', (e) => {
       e.stopPropagation();
-      showLeaf(el.dataset.target);
+      showLeaf(btn.dataset.target);
     });
   });
 
   document.querySelectorAll('[data-back]').forEach(btn => {
     btn.addEventListener('click', () => showView(btn.dataset.back));
   });
+
+  /* ---------- Daily Log calendar logic ---------- */
+  const STORAGE_KEY = 'sync-daily-log-entries';
+  let entries = {};
+  try { entries = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}'); } catch (e) { entries = {}; }
+
+  let calDate = new Date();
+  let selectedDate = null;
+  let selectedMood = null;
+
+  const pad = n => String(n).padStart(2, '0');
+  const dateStr = d => `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
+
+  const calGrid = document.getElementById('calGrid');
+  const calMonthLabel = document.getElementById('calMonthLabel');
+  const selDateLabel = document.getElementById('selDateLabel');
+  const memoInput = document.getElementById('memoInput');
+  const moodRow = document.getElementById('moodRow');
+
+  function renderCalendar() {
+    const year = calDate.getFullYear();
+    const month = calDate.getMonth();
+    calMonthLabel.textContent = `${year}년 ${month + 1}월`;
+
+    calGrid.innerHTML = '';
+    ['일','월','화','수','목','금','토'].forEach(d => {
+      const el = document.createElement('div');
+      el.className = 'cal-dow';
+      el.textContent = d;
+      calGrid.appendChild(el);
+    });
+
+    const firstDay = new Date(year, month, 1);
+    const startOffset = firstDay.getDay();
+    const daysInMonth = new Date(year, month + 1, 0).getDate();
+    const todayStr = dateStr(new Date());
+
+    for (let i = 0; i < startOffset; i++) {
+      const blank = document.createElement('div');
+      blank.className = 'cal-day blank';
+      calGrid.appendChild(blank);
+    }
+
+    for (let d = 1; d <= daysInMonth; d++) {
+      const cellDate = new Date(year, month, d);
+      const cellStr = dateStr(cellDate);
+      const cell = document.createElement('div');
+      cell.className = 'cal-day';
+      if (cellStr === todayStr) cell.classList.add('today');
+      if (cellStr === selectedDate) cell.classList.add('selected');
+
+      const num = document.createElement('div');
+      num.textContent = d;
+      cell.appendChild(num);
+
+      if (entries[cellStr]) {
+        const mood = document.createElement('div');
+        mood.className = 'mood';
+        mood.textContent = entries[cellStr].mood || '•';
+        cell.appendChild(mood);
+      }
+
+      cell.addEventListener('click', () => selectDate(cellStr));
+      calGrid.appendChild(cell);
+    }
+  }
+
+  function selectDate(str) {
+    selectedDate = str;
+    const entry = entries[str];
+    selectedMood = entry ? entry.mood : null;
+    selDateLabel.textContent = str + ' 기록';
+    memoInput.value = entry ? entry.memo : '';
+    document.querySelectorAll('#moodRow button').forEach(b => {
+      b.classList.toggle('sel', b.dataset.mood === selectedMood);
+    });
+    renderCalendar();
+  }
+
+  moodRow.querySelectorAll('button').forEach(b => {
+    b.addEventListener('click', () => {
+      selectedMood = b.dataset.mood;
+      moodRow.querySelectorAll('button').forEach(x => x.classList.toggle('sel', x === b));
+    });
+  });
+
+  document.getElementById('saveEntry').addEventListener('click', () => {
+    if (!selectedDate) { alert('먼저 날짜를 선택해주세요.'); return; }
+    entries[selectedDate] = { mood: selectedMood || '📝', memo: memoInput.value.trim() };
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(entries));
+    renderCalendar();
+  });
+
+  document.getElementById('deleteEntry').addEventListener('click', () => {
+    if (!selectedDate) return;
+    delete entries[selectedDate];
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(entries));
+    memoInput.value = '';
+    selectedMood = null;
+    moodRow.querySelectorAll('button').forEach(b => b.classList.remove('sel'));
+    renderCalendar();
+  });
+
+  document.getElementById('calPrev').addEventListener('click', () => {
+    calDate.setMonth(calDate.getMonth() - 1);
+    renderCalendar();
+  });
+  document.getElementById('calNext').addEventListener('click', () => {
+    calDate.setMonth(calDate.getMonth() + 1);
+    renderCalendar();
+  });
+  document.getElementById('calToday').addEventListener('click', () => {
+    calDate = new Date();
+    selectDate(dateStr(new Date()));
+  });
+
+  renderCalendar();
+  showView('happy');
 </script>
 
 </body>
