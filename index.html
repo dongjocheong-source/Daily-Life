@@ -6,252 +6,443 @@
 <title>싱크님의 일상</title>
 <style>
   :root {
-    --bg: #faf7f2;
+    --bg: #f6f3ec;
+    --sidebar: #1f2937;
+    --sidebar-hover: #2b3648;
+    --sidebar-text: #cbd3df;
     --card: #ffffff;
-    --accent: #7c9a72;
-    --accent-dark: #5f7a58;
-    --text: #33322e;
+    --accent: #c9915a;
+    --accent2: #6b8f7a;
+    --text: #2b2a27;
     --muted: #8a877f;
     --border: #e8e3da;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; }
   body {
     font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
     background: var(--bg);
     color: var(--text);
+    display: flex;
     min-height: 100vh;
   }
-  header {
-    text-align: center;
-    padding: 48px 20px 28px;
+
+  /* ---------- Sidebar ---------- */
+  .sidebar {
+    width: 270px;
+    flex-shrink: 0;
+    background: var(--sidebar);
+    color: var(--sidebar-text);
+    padding: 32px 0;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow-y: auto;
   }
-  header h1 {
-    font-size: 2rem;
-    font-weight: 700;
-    letter-spacing: -0.5px;
+  .brand {
+    padding: 0 26px 28px;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    margin-bottom: 18px;
   }
-  header p {
-    margin-top: 8px;
-    color: var(--muted);
-    font-size: 0.95rem;
+  .brand h1 {
+    font-size: 1.25rem;
+    color: #fff;
+    letter-spacing: -0.3px;
   }
-  nav {
+  .brand p {
+    margin-top: 6px;
+    font-size: 0.78rem;
+    color: #8f97a6;
+  }
+  .nav-group { margin-bottom: 4px; }
+  .nav-head {
     display: flex;
-    justify-content: center;
+    align-items: center;
     gap: 10px;
-    flex-wrap: wrap;
-    padding: 0 20px 30px;
-  }
-  nav button {
-    border: 1px solid var(--border);
-    background: var(--card);
-    color: var(--text);
-    padding: 10px 20px;
-    border-radius: 999px;
-    font-size: 0.95rem;
+    padding: 12px 26px;
     cursor: pointer;
-    transition: all 0.2s ease;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #fff;
+    transition: background 0.15s ease;
   }
-  nav button:hover {
-    border-color: var(--accent);
-  }
-  nav button.active {
+  .nav-head:hover { background: var(--sidebar-hover); }
+  .nav-head .num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 22px;
+    height: 22px;
+    border-radius: 6px;
     background: var(--accent);
     color: #fff;
-    border-color: var(--accent);
+    font-size: 0.75rem;
+    font-weight: 700;
   }
+  .nav-head .chev {
+    margin-left: auto;
+    font-size: 0.7rem;
+    color: #8f97a6;
+    transition: transform 0.2s ease;
+  }
+  .nav-group.open .nav-head .chev { transform: rotate(90deg); }
+  .nav-sub {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.25s ease;
+  }
+  .nav-group.open .nav-sub { max-height: 300px; }
+  .nav-sub button {
+    display: block;
+    width: 100%;
+    text-align: left;
+    background: none;
+    border: none;
+    color: var(--sidebar-text);
+    font-size: 0.87rem;
+    padding: 9px 26px 9px 54px;
+    cursor: pointer;
+    transition: background 0.15s ease, color 0.15s ease;
+  }
+  .nav-sub button:hover { background: var(--sidebar-hover); color: #fff; }
+  .nav-sub button.active {
+    background: var(--sidebar-hover);
+    color: var(--accent);
+    font-weight: 600;
+  }
+
+  /* ---------- Main ---------- */
   main {
-    max-width: 900px;
-    margin: 0 auto;
-    padding: 0 20px 60px;
+    flex: 1;
+    padding: 48px 56px;
+    max-width: 980px;
+  }
+  .hero {
+    background: linear-gradient(135deg, #2c3e50 0%, #4a6b5a 100%);
+    color: #fff;
+    border-radius: 20px;
+    padding: 40px 44px;
+    margin-bottom: 36px;
+  }
+  .hero h2 {
+    font-size: 1.6rem;
+    font-weight: 700;
+    line-height: 1.4;
+  }
+  .hero p {
+    margin-top: 10px;
+    color: rgba(255,255,255,0.75);
+    font-size: 0.92rem;
+  }
+  .section-title {
+    font-size: 1.15rem;
+    font-weight: 700;
+    margin: 30px 0 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .section-title .badge {
+    background: var(--accent);
+    color: #fff;
+    font-size: 0.72rem;
+    padding: 3px 9px;
+    border-radius: 20px;
+    font-weight: 700;
   }
   .grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 18px;
+    grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+    gap: 16px;
   }
   .card {
     background: var(--card);
     border: 1px solid var(--border);
     border-radius: 16px;
-    padding: 26px 24px;
+    padding: 24px 22px;
     cursor: pointer;
-    transition: transform 0.15s ease, box-shadow 0.15s ease;
+    transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
   }
   .card:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+    transform: translateY(-4px);
+    box-shadow: 0 10px 24px rgba(0,0,0,0.07);
+    border-color: var(--accent);
   }
-  .card h3 {
-    font-size: 1.05rem;
-    margin-bottom: 6px;
+  .card .icon { font-size: 1.6rem; margin-bottom: 10px; display: block; }
+  .card h3 { font-size: 1rem; margin-bottom: 4px; }
+  .card p { font-size: 0.82rem; color: var(--muted); }
+
+  /* leaf pages */
+  .leaf { display: none; }
+  .leaf.active { display: block; }
+  .leaf .back {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--accent);
+    background: none;
+    border: none;
+    font-size: 0.88rem;
+    cursor: pointer;
+    margin-bottom: 22px;
   }
-  .card p {
-    font-size: 0.85rem;
-    color: var(--muted);
+  .leaf .page-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 24px;
   }
-  section.page { display: none; }
-  section.page.active { display: block; }
-  .page-title {
-    font-size: 1.4rem;
-    font-weight: 700;
-    margin-bottom: 20px;
-    padding-bottom: 12px;
-    border-bottom: 2px solid var(--accent);
-  }
-  .content-block {
+  .leaf .page-header .icon-big {
+    font-size: 2rem;
     background: var(--card);
     border: 1px solid var(--border);
     border-radius: 14px;
-    padding: 24px;
-    margin-bottom: 16px;
+    width: 56px;
+    height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
-  .content-block h4 {
-    color: var(--accent-dark);
-    margin-bottom: 8px;
-    font-size: 1.05rem;
+  .leaf .page-header h2 { font-size: 1.4rem; }
+  .leaf .page-header span.crumb { color: var(--muted); font-size: 0.85rem; }
+  .content-block {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 26px 28px;
+    line-height: 1.75;
+    color: #4b4a45;
+    font-size: 0.93rem;
   }
-  .content-block p {
-    color: var(--muted);
-    font-size: 0.9rem;
-    line-height: 1.6;
-  }
-  .back-link {
-    display: inline-block;
-    margin-bottom: 20px;
-    color: var(--accent-dark);
-    text-decoration: none;
-    font-size: 0.9rem;
-    cursor: pointer;
-  }
-  .back-link:hover { text-decoration: underline; }
-  footer {
-    text-align: center;
-    color: var(--muted);
-    font-size: 0.8rem;
-    padding: 30px 0;
+
+  .view { display: none; }
+  .view.active { display: block; }
+
+  @media (max-width: 800px) {
+    body { flex-direction: column; }
+    .sidebar { width: 100%; height: auto; position: relative; }
+    main { padding: 32px 20px; }
   }
 </style>
 </head>
 <body>
 
-<header>
-  <h1>싱크님의 일상</h1>
-  <p>일상, 배움, 즐거움, 그리고 은퇴 이후의 삶을 기록합니다</p>
-</header>
+<aside class="sidebar">
+  <div class="brand">
+    <h1>싱크님의 일상</h1>
+    <p>일상 · 투자 · 은퇴, 그 이후의 삶</p>
+  </div>
 
-<nav>
-  <button class="nav-btn active" data-target="home">홈</button>
-  <button class="nav-btn" data-target="daily">일상의 즐거움</button>
-  <button class="nav-btn" data-target="learn">관심있는 배움</button>
-  <button class="nav-btn" data-target="enjoy">인조이 더 라이프</button>
-  <button class="nav-btn" data-target="retire">은퇴준비</button>
-</nav>
+  <div class="nav-group open" data-group="g1">
+    <div class="nav-head" data-view="home">
+      <span class="num">1</span>
+      <span>일상의 행복</span>
+      <span class="chev">▶</span>
+    </div>
+    <div class="nav-sub">
+      <button data-target="daily1">1.1 일상의 즐거움</button>
+      <button data-target="daily2">1.2 관심있는 배움</button>
+      <button data-target="daily3">1.3 인조이 더 라이프</button>
+    </div>
+  </div>
+
+  <div class="nav-group" data-group="g2">
+    <div class="nav-head" data-view="invest">
+      <span class="num">2</span>
+      <span>투자 정보</span>
+      <span class="chev">▶</span>
+    </div>
+    <div class="nav-sub">
+      <button data-target="inv1">2.1 미국 투자</button>
+      <button data-target="inv2">2.2 한국 투자</button>
+      <button data-target="inv3">2.3 중국 투자</button>
+      <button data-target="inv4">2.4 원자재 투자</button>
+    </div>
+  </div>
+
+  <div class="nav-group" data-group="g3">
+    <div class="nav-head" data-view="retire">
+      <span class="num">3</span>
+      <span>은퇴준비</span>
+      <span class="chev">▶</span>
+    </div>
+    <div class="nav-sub">
+      <button data-target="ret1">3.1 은퇴설계</button>
+      <button data-target="ret2">3.2 2막 준비</button>
+      <button data-target="ret3">3.3 전원 생활</button>
+    </div>
+  </div>
+</aside>
 
 <main>
 
-  <!-- HOME -->
-  <section id="home" class="page active">
+  <!-- ===== VIEW: HOME (section 1 overview) ===== -->
+  <div id="view-home" class="view active">
+    <div class="hero">
+      <h2>진정한 행복은<br>일상의 행복으로부터...</h2>
+      <p>책, 음악, 배움, 그리고 걷고 떠나고 맛보는 순간들을 기록합니다</p>
+    </div>
+
+    <div class="section-title"><span class="badge">1.1</span> 일상의 즐거움</div>
     <div class="grid">
-      <div class="card" data-target="daily">
-        <h3>📚 일상의 즐거움</h3>
-        <p>책과 함께 · 음악과 함께</p>
-      </div>
-      <div class="card" data-target="learn">
-        <h3>🧠 관심있는 배움</h3>
-        <p>AI 스터디 · 드론 재미있을까</p>
-      </div>
-      <div class="card" data-target="enjoy">
-        <h3>🌿 인조이 더 라이프</h3>
-        <p>산행 정보 · 여행 정보 · 맛집 정보</p>
-      </div>
-      <div class="card" data-target="retire">
-        <h3>🏡 은퇴준비</h3>
-        <p>은퇴설계 · 2막 준비 · 전원 생활</p>
-      </div>
+      <div class="card" data-target="daily1"><span class="icon">📖</span><h3>책과 함께</h3><p>읽고 있는 책과 서평</p></div>
+      <div class="card" data-target="daily1"><span class="icon">🎵</span><h3>음악과 함께</h3><p>플레이리스트와 공연 후기</p></div>
     </div>
-  </section>
 
-  <!-- 일상의 즐거움 -->
-  <section id="daily" class="page">
-    <a class="back-link" data-target="home">← 홈으로</a>
-    <div class="page-title">일상의 즐거움</div>
-    <div class="content-block">
-      <h4>책과 함께</h4>
-      <p>읽고 있는 책, 인상 깊은 문장, 서평을 기록하는 공간입니다.</p>
+    <div class="section-title"><span class="badge">1.2</span> 관심있는 배움</div>
+    <div class="grid">
+      <div class="card" data-target="daily2"><span class="icon">🤖</span><h3>AI 스터디</h3><p>공부 기록과 실습 노트</p></div>
+      <div class="card" data-target="daily2"><span class="icon">🚁</span><h3>드론 재미있을까</h3><p>드론 입문 정보와 체험기</p></div>
     </div>
-    <div class="content-block">
-      <h4>음악과 함께</h4>
-      <p>즐겨 듣는 음악과 플레이리스트, 공연 후기를 남기는 공간입니다.</p>
-    </div>
-  </section>
 
-  <!-- 관심있는 배움 -->
-  <section id="learn" class="page">
-    <a class="back-link" data-target="home">← 홈으로</a>
-    <div class="page-title">관심있는 배움</div>
-    <div class="content-block">
-      <h4>AI 스터디</h4>
-      <p>AI 관련 공부 기록, 강의 노트, 실습 프로젝트를 정리하는 공간입니다.</p>
+    <div class="section-title"><span class="badge">1.3</span> 인조이 더 라이프</div>
+    <div class="grid">
+      <div class="card" data-target="daily3"><span class="icon">⛰️</span><h3>산행 정보</h3><p>등산 코스와 준비물</p></div>
+      <div class="card" data-target="daily3"><span class="icon">✈️</span><h3>여행 정보</h3><p>국내외 여행 계획과 후기</p></div>
+      <div class="card" data-target="daily3"><span class="icon">🍜</span><h3>맛집 정보</h3><p>다녀온 맛집과 추천 메뉴</p></div>
     </div>
-    <div class="content-block">
-      <h4>드론 재미있을까</h4>
-      <p>드론 입문 정보와 체험기를 담는 공간입니다.</p>
-    </div>
-  </section>
+  </div>
 
-  <!-- 인조이 더 라이프 -->
-  <section id="enjoy" class="page">
-    <a class="back-link" data-target="home">← 홈으로</a>
-    <div class="page-title">인조이 더 라이프</div>
-    <div class="content-block">
-      <h4>산행 정보</h4>
-      <p>등산 코스, 준비물, 다녀온 산 기록을 정리하는 공간입니다.</p>
+  <!-- ===== VIEW: INVEST (section 2 overview) ===== -->
+  <div id="view-invest" class="view">
+    <div class="hero" style="background:linear-gradient(135deg,#2c3e50 0%,#8a6d3b 100%);">
+      <h2>투자 정보</h2>
+      <p>지역별, 자산별 투자 아이디어와 기록을 정리합니다</p>
     </div>
-    <div class="content-block">
-      <h4>여행 정보</h4>
-      <p>국내외 여행 계획과 후기를 남기는 공간입니다.</p>
+    <div class="grid">
+      <div class="card" data-target="inv1"><span class="icon">🇺🇸</span><h3>미국 투자</h3><p>미국 주식, ETF 정보</p></div>
+      <div class="card" data-target="inv2"><span class="icon">🇰🇷</span><h3>한국 투자</h3><p>국내 주식, 펀드 정보</p></div>
+      <div class="card" data-target="inv3"><span class="icon">🇨🇳</span><h3>중국 투자</h3><p>중국 시장 동향과 정보</p></div>
+      <div class="card" data-target="inv4"><span class="icon">🛢️</span><h3>원자재 투자</h3><p>금, 원유 등 원자재 정보</p></div>
     </div>
-    <div class="content-block">
-      <h4>맛집 정보</h4>
-      <p>다녀온 맛집, 추천 메뉴, 위치 정보를 기록하는 공간입니다.</p>
-    </div>
-  </section>
+  </div>
 
-  <!-- 은퇴준비 -->
-  <section id="retire" class="page">
-    <a class="back-link" data-target="home">← 홈으로</a>
-    <div class="page-title">은퇴준비</div>
-    <div class="content-block">
-      <h4>은퇴설계</h4>
-      <p>재무 계획, 연금, 은퇴 시기에 관한 고민을 정리하는 공간입니다.</p>
+  <!-- ===== VIEW: RETIRE (section 3 overview) ===== -->
+  <div id="view-retire" class="view">
+    <div class="hero" style="background:linear-gradient(135deg,#3b3b58 0%,#6b8f7a 100%);">
+      <h2>은퇴준비</h2>
+      <p>은퇴 이후의 삶을 미리 그려보고 준비합니다</p>
     </div>
-    <div class="content-block">
-      <h4>2막 준비</h4>
-      <p>은퇴 이후 하고 싶은 일, 새로운 도전에 대한 기록입니다.</p>
+    <div class="grid">
+      <div class="card" data-target="ret1"><span class="icon">💰</span><h3>은퇴설계</h3><p>재무 계획과 연금 정보</p></div>
+      <div class="card" data-target="ret2"><span class="icon">🌱</span><h3>2막 준비</h3><p>새로운 도전과 계획</p></div>
+      <div class="card" data-target="ret3"><span class="icon">🏡</span><h3>전원 생활</h3><p>전원주택과 시골살이 정보</p></div>
     </div>
+  </div>
+
+  <!-- ===== LEAF PAGES ===== -->
+  <div id="daily1" class="leaf">
+    <button class="back" data-back="home">← 목록으로</button>
+    <div class="page-header"><div class="icon-big">📖</div><div><h2>일상의 즐거움</h2><span class="crumb">1.1 책과 함께 · 음악과 함께</span></div></div>
     <div class="content-block">
-      <h4>전원 생활</h4>
-      <p>전원 주택, 텃밭, 시골살이에 관한 정보를 담는 공간입니다.</p>
+      <p><strong>책과 함께</strong> — 읽고 있는 책, 인상 깊은 문장, 서평을 기록하는 공간입니다.</p><br>
+      <p><strong>음악과 함께</strong> — 즐겨 듣는 음악과 플레이리스트, 공연 후기를 남기는 공간입니다.</p>
     </div>
-  </section>
+  </div>
+
+  <div id="daily2" class="leaf">
+    <button class="back" data-back="home">← 목록으로</button>
+    <div class="page-header"><div class="icon-big">🤖</div><div><h2>관심있는 배움</h2><span class="crumb">1.2 AI 스터디 · 드론 재미있을까</span></div></div>
+    <div class="content-block">
+      <p><strong>AI 스터디</strong> — AI 관련 공부 기록, 강의 노트, 실습 프로젝트를 정리하는 공간입니다.</p><br>
+      <p><strong>드론 재미있을까</strong> — 드론 입문 정보와 체험기를 담는 공간입니다.</p>
+    </div>
+  </div>
+
+  <div id="daily3" class="leaf">
+    <button class="back" data-back="home">← 목록으로</button>
+    <div class="page-header"><div class="icon-big">🌿</div><div><h2>인조이 더 라이프</h2><span class="crumb">1.3 산행 · 여행 · 맛집 정보</span></div></div>
+    <div class="content-block">
+      <p><strong>산행 정보</strong> — 등산 코스, 준비물, 다녀온 산 기록을 정리하는 공간입니다.</p><br>
+      <p><strong>여행 정보</strong> — 국내외 여행 계획과 후기를 남기는 공간입니다.</p><br>
+      <p><strong>맛집 정보</strong> — 다녀온 맛집, 추천 메뉴, 위치 정보를 기록하는 공간입니다.</p>
+    </div>
+  </div>
+
+  <div id="inv1" class="leaf">
+    <button class="back" data-back="invest">← 목록으로</button>
+    <div class="page-header"><div class="icon-big">🇺🇸</div><div><h2>미국 투자</h2><span class="crumb">2.1 US Market</span></div></div>
+    <div class="content-block"><p>미국 주식, ETF, 시장 동향과 개인적인 투자 아이디어를 기록하는 공간입니다.</p></div>
+  </div>
+
+  <div id="inv2" class="leaf">
+    <button class="back" data-back="invest">← 목록으로</button>
+    <div class="page-header"><div class="icon-big">🇰🇷</div><div><h2>한국 투자</h2><span class="crumb">2.2 KR Market</span></div></div>
+    <div class="content-block"><p>국내 주식, 펀드, 시장 동향과 개인적인 투자 아이디어를 기록하는 공간입니다.</p></div>
+  </div>
+
+  <div id="inv3" class="leaf">
+    <button class="back" data-back="invest">← 목록으로</button>
+    <div class="page-header"><div class="icon-big">🇨🇳</div><div><h2>중국 투자</h2><span class="crumb">2.3 CN Market</span></div></div>
+    <div class="content-block"><p>중국 증시와 관련 산업 동향, 투자 아이디어를 기록하는 공간입니다.</p></div>
+  </div>
+
+  <div id="inv4" class="leaf">
+    <button class="back" data-back="invest">← 목록으로</button>
+    <div class="page-header"><div class="icon-big">🛢️</div><div><h2>원자재 투자</h2><span class="crumb">2.4 Commodities</span></div></div>
+    <div class="content-block"><p>금, 은, 원유 등 원자재 시장 동향과 투자 아이디어를 기록하는 공간입니다.</p></div>
+  </div>
+
+  <div id="ret1" class="leaf">
+    <button class="back" data-back="retire">← 목록으로</button>
+    <div class="page-header"><div class="icon-big">💰</div><div><h2>은퇴설계</h2><span class="crumb">3.1 Retirement Plan</span></div></div>
+    <div class="content-block"><p>재무 계획, 연금, 은퇴 시기에 관한 고민을 정리하는 공간입니다.</p></div>
+  </div>
+
+  <div id="ret2" class="leaf">
+    <button class="back" data-back="retire">← 목록으로</button>
+    <div class="page-header"><div class="icon-big">🌱</div><div><h2>2막 준비</h2><span class="crumb">3.2 Second Act</span></div></div>
+    <div class="content-block"><p>은퇴 이후 하고 싶은 일, 새로운 도전에 대한 기록입니다.</p></div>
+  </div>
+
+  <div id="ret3" class="leaf">
+    <button class="back" data-back="retire">← 목록으로</button>
+    <div class="page-header"><div class="icon-big">🏡</div><div><h2>전원 생활</h2><span class="crumb">3.3 Country Life</span></div></div>
+    <div class="content-block"><p>전원 주택, 텃밭, 시골살이에 관한 정보를 담는 공간입니다.</p></div>
+  </div>
 
 </main>
 
-<footer>© 싱크님의 일상</footer>
-
 <script>
-  function showPage(id) {
-    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-    document.getElementById(id).classList.add('active');
-    document.querySelectorAll('.nav-btn').forEach(b => {
-      b.classList.toggle('active', b.dataset.target === id);
-    });
+  const views = document.querySelectorAll('.view');
+  const leaves = document.querySelectorAll('.leaf');
+  const navGroups = document.querySelectorAll('.nav-group');
+  const subButtons = document.querySelectorAll('.nav-sub button');
+
+  function showView(id) {
+    views.forEach(v => v.classList.remove('active'));
+    leaves.forEach(l => l.classList.remove('active'));
+    document.getElementById('view-' + id).classList.add('active');
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
+  function showLeaf(id) {
+    views.forEach(v => v.classList.remove('active'));
+    leaves.forEach(l => l.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    subButtons.forEach(b => b.classList.toggle('active', b.dataset.target === id));
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  document.querySelectorAll('.nav-head').forEach(head => {
+    head.addEventListener('click', () => {
+      const group = head.closest('.nav-group');
+      const isOpen = group.classList.contains('open');
+      navGroups.forEach(g => g.classList.remove('open'));
+      if (!isOpen) group.classList.add('open');
+      showView(head.dataset.view);
+    });
+  });
+
   document.querySelectorAll('[data-target]').forEach(el => {
-    el.addEventListener('click', () => showPage(el.dataset.target));
+    el.addEventListener('click', (e) => {
+      e.stopPropagation();
+      showLeaf(el.dataset.target);
+    });
+  });
+
+  document.querySelectorAll('[data-back]').forEach(btn => {
+    btn.addEventListener('click', () => showView(btn.dataset.back));
   });
 </script>
 
