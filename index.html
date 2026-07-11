@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>싱크님의 일상</title>
+<style>
+  :root {
+    --bg: #faf7f2;
+    --card: #ffffff;
+    --accent: #7c9a72;
+    --accent-dark: #5f7a58;
+    --text: #33322e;
+    --muted: #8a877f;
+    --border: #e8e3da;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+  }
+  header {
+    text-align: center;
+    padding: 48px 20px 28px;
+  }
+  header h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+  }
+  header p {
+    margin-top: 8px;
+    color: var(--muted);
+    font-size: 0.95rem;
+  }
+  nav {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    padding: 0 20px 30px;
+  }
+  nav button {
+    border: 1px solid var(--border);
+    background: var(--card);
+    color: var(--text);
+    padding: 10px 20px;
+    border-radius: 999px;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  nav button:hover {
+    border-color: var(--accent);
+  }
+  nav button.active {
+    background: var(--accent);
+    color: #fff;
+    border-color: var(--accent);
+  }
+  main {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 20px 60px;
+  }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 18px;
+  }
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 26px 24px;
+    cursor: pointer;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+  .card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+  }
+  .card h3 {
+    font-size: 1.05rem;
+    margin-bottom: 6px;
+  }
+  .card p {
+    font-size: 0.85rem;
+    color: var(--muted);
+  }
+  section.page { display: none; }
+  section.page.active { display: block; }
+  .page-title {
+    font-size: 1.4rem;
+    font-weight: 700;
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 2px solid var(--accent);
+  }
+  .content-block {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 24px;
+    margin-bottom: 16px;
+  }
+  .content-block h4 {
+    color: var(--accent-dark);
+    margin-bottom: 8px;
+    font-size: 1.05rem;
+  }
+  .content-block p {
+    color: var(--muted);
+    font-size: 0.9rem;
+    line-height: 1.6;
+  }
+  .back-link {
+    display: inline-block;
+    margin-bottom: 20px;
+    color: var(--accent-dark);
+    text-decoration: none;
+    font-size: 0.9rem;
+    cursor: pointer;
+  }
+  .back-link:hover { text-decoration: underline; }
+  footer {
+    text-align: center;
+    color: var(--muted);
+    font-size: 0.8rem;
+    padding: 30px 0;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>싱크님의 일상</h1>
+  <p>일상, 배움, 즐거움, 그리고 은퇴 이후의 삶을 기록합니다</p>
+</header>
+
+<nav>
+  <button class="nav-btn active" data-target="home">홈</button>
+  <button class="nav-btn" data-target="daily">일상의 즐거움</button>
+  <button class="nav-btn" data-target="learn">관심있는 배움</button>
+  <button class="nav-btn" data-target="enjoy">인조이 더 라이프</button>
+  <button class="nav-btn" data-target="retire">은퇴준비</button>
+</nav>
+
+<main>
+
+  <!-- HOME -->
+  <section id="home" class="page active">
+    <div class="grid">
+      <div class="card" data-target="daily">
+        <h3>📚 일상의 즐거움</h3>
+        <p>책과 함께 · 음악과 함께</p>
+      </div>
+      <div class="card" data-target="learn">
+        <h3>🧠 관심있는 배움</h3>
+        <p>AI 스터디 · 드론 재미있을까</p>
+      </div>
+      <div class="card" data-target="enjoy">
+        <h3>🌿 인조이 더 라이프</h3>
+        <p>산행 정보 · 여행 정보 · 맛집 정보</p>
+      </div>
+      <div class="card" data-target="retire">
+        <h3>🏡 은퇴준비</h3>
+        <p>은퇴설계 · 2막 준비 · 전원 생활</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 일상의 즐거움 -->
+  <section id="daily" class="page">
+    <a class="back-link" data-target="home">← 홈으로</a>
+    <div class="page-title">일상의 즐거움</div>
+    <div class="content-block">
+      <h4>책과 함께</h4>
+      <p>읽고 있는 책, 인상 깊은 문장, 서평을 기록하는 공간입니다.</p>
+    </div>
+    <div class="content-block">
+      <h4>음악과 함께</h4>
+      <p>즐겨 듣는 음악과 플레이리스트, 공연 후기를 남기는 공간입니다.</p>
+    </div>
+  </section>
+
+  <!-- 관심있는 배움 -->
+  <section id="learn" class="page">
+    <a class="back-link" data-target="home">← 홈으로</a>
+    <div class="page-title">관심있는 배움</div>
+    <div class="content-block">
+      <h4>AI 스터디</h4>
+      <p>AI 관련 공부 기록, 강의 노트, 실습 프로젝트를 정리하는 공간입니다.</p>
+    </div>
+    <div class="content-block">
+      <h4>드론 재미있을까</h4>
+      <p>드론 입문 정보와 체험기를 담는 공간입니다.</p>
+    </div>
+  </section>
+
+  <!-- 인조이 더 라이프 -->
+  <section id="enjoy" class="page">
+    <a class="back-link" data-target="home">← 홈으로</a>
+    <div class="page-title">인조이 더 라이프</div>
+    <div class="content-block">
+      <h4>산행 정보</h4>
+      <p>등산 코스, 준비물, 다녀온 산 기록을 정리하는 공간입니다.</p>
+    </div>
+    <div class="content-block">
+      <h4>여행 정보</h4>
+      <p>국내외 여행 계획과 후기를 남기는 공간입니다.</p>
+    </div>
+    <div class="content-block">
+      <h4>맛집 정보</h4>
+      <p>다녀온 맛집, 추천 메뉴, 위치 정보를 기록하는 공간입니다.</p>
+    </div>
+  </section>
+
+  <!-- 은퇴준비 -->
+  <section id="retire" class="page">
+    <a class="back-link" data-target="home">← 홈으로</a>
+    <div class="page-title">은퇴준비</div>
+    <div class="content-block">
+      <h4>은퇴설계</h4>
+      <p>재무 계획, 연금, 은퇴 시기에 관한 고민을 정리하는 공간입니다.</p>
+    </div>
+    <div class="content-block">
+      <h4>2막 준비</h4>
+      <p>은퇴 이후 하고 싶은 일, 새로운 도전에 대한 기록입니다.</p>
+    </div>
+    <div class="content-block">
+      <h4>전원 생활</h4>
+      <p>전원 주택, 텃밭, 시골살이에 관한 정보를 담는 공간입니다.</p>
+    </div>
+  </section>
+
+</main>
+
+<footer>© 싱크님의 일상</footer>
+
+<script>
+  function showPage(id) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    document.querySelectorAll('.nav-btn').forEach(b => {
+      b.classList.toggle('active', b.dataset.target === id);
+    });
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  document.querySelectorAll('[data-target]').forEach(el => {
+    el.addEventListener('click', () => showPage(el.dataset.target));
+  });
+</script>
+
+</body>
+</html>
