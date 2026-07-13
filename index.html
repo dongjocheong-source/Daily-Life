@@ -82,7 +82,7 @@
   .nav-group.open .nav-head .chev { transform: rotate(90deg); }
   .nav-sub { max-height: 0; overflow: hidden; transition: max-height 0.25s ease; }
   .nav-group.open .nav-sub { max-height: 400px; }
-  .nav-sub button {
+  .nav-sub button, .nav-sub a {
     display: block;
     width: 100%;
     text-align: left;
@@ -92,9 +92,10 @@
     font-size: 0.83rem;
     padding: 8px 26px 8px 52px;
     cursor: pointer;
+    text-decoration: none;
     transition: background 0.15s ease, color 0.15s ease;
   }
-  .nav-sub button:hover { background: var(--sidebar-hover); color: #fff; }
+  .nav-sub button:hover, .nav-sub a:hover { background: var(--sidebar-hover); color: #fff; }
   .nav-sub button.active { background: var(--sidebar-hover); color: var(--accent); font-weight: 600; }
 
   /* ---------- Main ---------- */
@@ -139,6 +140,7 @@
     transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
   }
   .card:hover { transform: translateY(-4px); box-shadow: 0 10px 24px rgba(0,0,0,0.07); border-color: var(--accent); }
+  a.card { display: block; text-decoration: none; color: inherit; }
   .card .icon { font-size: 1.5rem; margin-bottom: 8px; display: block; }
   .card h3 { font-size: 0.98rem; margin-bottom: 4px; }
   .card p { font-size: 0.8rem; color: var(--muted); }
@@ -159,14 +161,48 @@
   }
   .leaf .page-header h2 { font-size: 1.35rem; }
   .leaf .page-header span.crumb { color: var(--muted); font-size: 0.84rem; }
+
   .content-block {
     background: var(--card); border: 1px solid var(--border); border-radius: 16px;
     padding: 24px 26px; line-height: 1.75; color: #4b4a45; font-size: 0.92rem;
+    position: relative;
   }
   .content-block + .content-block { margin-top: 14px; }
+  .content-block::after {
+    content: "✏️ 클릭해서 수정";
+    position: absolute; top: 12px; right: 16px;
+    font-size: 0.68rem; color: var(--muted);
+    opacity: 0; transition: opacity 0.15s ease; pointer-events: none;
+  }
+  .content-block:hover::after { opacity: 1; }
+  .cb-label { font-weight: 700; color: var(--text); margin-bottom: 6px; font-size: 0.94rem; }
+  .cb-text {
+    outline: none; border-radius: 8px; cursor: text;
+    padding: 2px 4px; margin: -2px -4px;
+    transition: background 0.15s ease, box-shadow 0.15s ease;
+  }
+  .cb-text:hover { background: #faf6ef; }
+  .cb-text:focus { background: #fffaf2; box-shadow: 0 0 0 2px var(--accent) inset; }
+  .file-link {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--accent); color: #fff; padding: 10px 18px;
+    border-radius: 10px; text-decoration: none; font-size: 0.88rem; font-weight: 600;
+    transition: background 0.15s ease;
+  }
+  .file-link:hover { background: var(--accent2); }
 
   .view { display: none; }
   .view.active { display: block; }
+
+  /* ---------- Toast ---------- */
+  #toast {
+    position: fixed; top: 20px; right: 24px; background: #2b2a27; color: #fff;
+    padding: 8px 16px; border-radius: 8px; font-size: 0.82rem;
+    opacity: 0; transform: translateY(-8px);
+    transition: opacity 0.2s ease, transform 0.2s ease;
+    pointer-events: none; z-index: 999;
+  }
+  #toast.show { opacity: 1; transform: translateY(0); }
 
   /* ---------- Daily Log (interactive) ---------- */
   .log-wrap { display: grid; grid-template-columns: 1.3fr 1fr; gap: 24px; align-items: start; }
@@ -252,6 +288,8 @@
 </head>
 <body>
 
+<div id="toast"></div>
+
 <aside class="sidebar">
   <div class="brand">
     <h1>싱크님의 일상</h1>
@@ -303,8 +341,8 @@
       <span class="num">5</span><span>은퇴준비</span><span class="chev">▶</span>
     </div>
     <div class="nav-sub">
-      <button data-target="ret-pension">5.1 연금설계</button>
-      <button data-target="ret-secondact">5.2 2막 인생 준비</button>
+      <a href="files/pension-plan.pdf" target="_blank">5.1 연금설계 📎</a>
+      <a href="files/second-act.html" target="_blank">5.2 2막 인생 준비 📎</a>
       <button data-target="ret-wish">5.3 은퇴후 하고싶은거..</button>
     </div>
   </div>
@@ -427,8 +465,8 @@
       <p>은퇴 이후의 삶을 미리 그려봅니다</p>
     </div>
     <div class="grid">
-      <div class="card" data-target="ret-pension"><span class="icon">💰</span><h3>연금설계</h3><p>재무 계획과 연금 정보</p></div>
-      <div class="card" data-target="ret-secondact"><span class="icon">🌱</span><h3>2막 인생 준비</h3><p>새로운 도전과 계획</p></div>
+      <a class="card" href="files/pension-plan.pdf" target="_blank"><span class="icon">💰</span><h3>연금설계</h3><p>📎 PDF 파일 열기</p></a>
+      <a class="card" href="files/second-act.html" target="_blank"><span class="icon">🌱</span><h3>2막 인생 준비</h3><p>📎 HTML 파일 열기</p></a>
       <div class="card" data-target="ret-wish"><span class="icon">🏡</span><h3>은퇴후 하고싶은거..</h3><p>버킷리스트와 하고 싶은 일들</p></div>
     </div>
   </div>
@@ -464,101 +502,89 @@
     </div>
   </div>
 
-  <!-- ===== LEAF PAGES ===== -->
+  <!-- ===== LEAF PAGES (내용은 클릭해서 바로 수정 가능, 자동 저장됨) ===== -->
   <div id="happy1" class="leaf">
     <button class="back" data-back="happy">← 목록으로</button>
     <div class="page-header"><div class="icon-big">📖</div><div><h2>품위 있는 즐거움</h2><span class="crumb">2.1 책과 함께 · 음악과 함께</span></div></div>
-    <div class="content-block"><p><strong>책과 함께</strong> — 읽고 있는 책, 인상 깊은 문장, 서평을 기록하는 공간입니다.</p></div>
-    <div class="content-block"><p><strong>음악과 함께</strong> — 즐겨 듣는 음악과 플레이리스트, 공연 후기를 남기는 공간입니다.</p></div>
+    <div class="content-block"><div class="cb-label">책과 함께</div><div class="cb-text">읽고 있는 책, 인상 깊은 문장, 서평을 기록하는 공간입니다.</div></div>
+    <div class="content-block"><div class="cb-label">음악과 함께</div><div class="cb-text">즐겨 듣는 음악과 플레이리스트, 공연 후기를 남기는 공간입니다.</div></div>
   </div>
 
   <div id="happy2" class="leaf">
     <button class="back" data-back="happy">← 목록으로</button>
     <div class="page-header"><div class="icon-big">🌿</div><div><h2>인조이더라이프</h2><span class="crumb">2.2 산행 · 국내여행 · 해외여행 · 맛집</span></div></div>
-    <div class="content-block"><p><strong>산행 정보</strong> — 등산 코스, 준비물, 다녀온 산 기록을 정리하는 공간입니다.</p></div>
-    <div class="content-block"><p><strong>국내 여행 정보</strong> — 국내 여행 계획과 후기를 남기는 공간입니다.</p></div>
-    <div class="content-block"><p><strong>해외 여행 정보</strong> — 해외 여행 계획과 후기를 남기는 공간입니다.</p></div>
-    <div class="content-block"><p><strong>맛집 정보</strong> — 다녀온 맛집, 추천 메뉴, 위치 정보를 기록하는 공간입니다.</p></div>
+    <div class="content-block"><div class="cb-label">산행 정보</div><div class="cb-text">등산 코스, 준비물, 다녀온 산 기록을 정리하는 공간입니다.</div></div>
+    <div class="content-block"><div class="cb-label">국내 여행 정보</div><div class="cb-text">국내 여행 계획과 후기를 남기는 공간입니다.</div></div>
+    <div class="content-block"><div class="cb-label">해외 여행 정보</div><div class="cb-text">해외 여행 계획과 후기를 남기는 공간입니다.</div></div>
+    <div class="content-block"><div class="cb-label">맛집 정보</div><div class="cb-text">다녀온 맛집, 추천 메뉴, 위치 정보를 기록하는 공간입니다.</div></div>
   </div>
 
   <div id="interest1" class="leaf">
     <button class="back" data-back="interest">← 목록으로</button>
     <div class="page-header"><div class="icon-big">🤖</div><div><h2>공부 하는것</h2><span class="crumb">3.1 AI 스터디 · 드론의 재미</span></div></div>
-    <div class="content-block"><p><strong>AI 스터디</strong> — AI 관련 공부 기록, 강의 노트, 실습 프로젝트를 정리하는 공간입니다.</p></div>
-    <div class="content-block"><p><strong>드론의 재미</strong> — 드론 입문 정보와 체험기를 담는 공간입니다.</p></div>
+    <div class="content-block"><div class="cb-label">AI 스터디</div><div class="cb-text">AI 관련 공부 기록, 강의 노트, 실습 프로젝트를 정리하는 공간입니다.</div></div>
+    <div class="content-block"><div class="cb-label">드론의 재미</div><div class="cb-text">드론 입문 정보와 체험기를 담는 공간입니다.</div></div>
   </div>
 
   <div id="interest2" class="leaf">
     <button class="back" data-back="interest">← 목록으로</button>
     <div class="page-header"><div class="icon-big">🔨</div><div><h2>아래는 어떨까?</h2><span class="crumb">3.2 공방 · 나무키우기</span></div></div>
-    <div class="content-block"><p><strong>공방</strong> — 목공, 공예 등 손으로 무언가 만드는 활동에 관한 기록 공간입니다.</p></div>
-    <div class="content-block"><p><strong>나무키우기</strong> — 분재, 정원수 등 나무를 가꾸는 이야기를 담는 공간입니다.</p></div>
+    <div class="content-block"><div class="cb-label">공방</div><div class="cb-text">목공, 공예 등 손으로 무언가 만드는 활동에 관한 기록 공간입니다.</div></div>
+    <div class="content-block"><div class="cb-label">나무키우기</div><div class="cb-text">분재, 정원수 등 나무를 가꾸는 이야기를 담는 공간입니다.</div></div>
   </div>
 
   <div id="inv-safe" class="leaf">
     <button class="back" data-back="invest">← 목록으로</button>
     <div class="page-header"><div class="icon-big">🛡️</div><div><h2>안정자산 투자</h2><span class="crumb">4.1 Safe Assets</span></div></div>
-    <div class="content-block"><p>예금, 채권, MMF 등 안전자산 관련 정보와 투자 아이디어를 기록하는 공간입니다.</p></div>
+    <div class="content-block"><div class="cb-text">예금, 채권, MMF 등 안전자산 관련 정보와 투자 아이디어를 기록하는 공간입니다.</div></div>
   </div>
 
   <div id="inv-gold" class="leaf">
     <button class="back" data-back="invest">← 목록으로</button>
     <div class="page-header"><div class="icon-big">🥇</div><div><h2>금/은투자</h2><span class="crumb">4.2 Gold &amp; Silver</span></div></div>
-    <div class="content-block"><p>금, 은 등 귀금속 시장 동향과 투자 아이디어를 기록하는 공간입니다.</p></div>
+    <div class="content-block"><div class="cb-text">금, 은 등 귀금속 시장 동향과 투자 아이디어를 기록하는 공간입니다.</div></div>
   </div>
 
   <div id="inv-us" class="leaf">
     <button class="back" data-back="invest">← 목록으로</button>
     <div class="page-header"><div class="icon-big">🇺🇸</div><div><h2>미국 투자</h2><span class="crumb">4.3 US Market</span></div></div>
-    <div class="content-block"><p>미국 주식, ETF, 시장 동향과 개인적인 투자 아이디어를 기록하는 공간입니다.</p></div>
+    <div class="content-block"><div class="cb-text">미국 주식, ETF, 시장 동향과 개인적인 투자 아이디어를 기록하는 공간입니다.</div></div>
   </div>
 
   <div id="inv-cn" class="leaf">
     <button class="back" data-back="invest">← 목록으로</button>
     <div class="page-header"><div class="icon-big">🇨🇳</div><div><h2>중국 투자</h2><span class="crumb">4.4 CN Market</span></div></div>
-    <div class="content-block"><p>중국 증시와 관련 산업 동향, 투자 아이디어를 기록하는 공간입니다.</p></div>
+    <div class="content-block"><div class="cb-text">중국 증시와 관련 산업 동향, 투자 아이디어를 기록하는 공간입니다.</div></div>
   </div>
 
   <div id="inv-kr" class="leaf">
     <button class="back" data-back="invest">← 목록으로</button>
     <div class="page-header"><div class="icon-big">🇰🇷</div><div><h2>한국 투자</h2><span class="crumb">4.5 KR Market</span></div></div>
-    <div class="content-block"><p>국내 주식, 펀드, 시장 동향과 개인적인 투자 아이디어를 기록하는 공간입니다.</p></div>
-  </div>
-
-  <div id="ret-pension" class="leaf">
-    <button class="back" data-back="retire">← 목록으로</button>
-    <div class="page-header"><div class="icon-big">💰</div><div><h2>연금설계</h2><span class="crumb">5.1 Pension Plan</span></div></div>
-    <div class="content-block"><p>국민연금, 퇴직연금, 개인연금 등 은퇴 후 현금흐름을 위한 연금 설계를 정리하는 공간입니다.</p></div>
-  </div>
-
-  <div id="ret-secondact" class="leaf">
-    <button class="back" data-back="retire">← 목록으로</button>
-    <div class="page-header"><div class="icon-big">🌱</div><div><h2>2막 인생 준비</h2><span class="crumb">5.2 Second Act</span></div></div>
-    <div class="content-block"><p>은퇴 이후 하고 싶은 일, 새로운 도전에 대한 기록입니다.</p></div>
+    <div class="content-block"><div class="cb-text">국내 주식, 펀드, 시장 동향과 개인적인 투자 아이디어를 기록하는 공간입니다.</div></div>
   </div>
 
   <div id="ret-wish" class="leaf">
     <button class="back" data-back="retire">← 목록으로</button>
     <div class="page-header"><div class="icon-big">🏡</div><div><h2>은퇴후 하고싶은거..</h2><span class="crumb">5.3 Bucket List</span></div></div>
-    <div class="content-block"><p>은퇴 후 해보고 싶은 일들, 버킷리스트를 자유롭게 적어보는 공간입니다.</p></div>
+    <div class="content-block"><div class="cb-text">은퇴 후 해보고 싶은 일들, 버킷리스트를 자유롭게 적어보는 공간입니다.</div></div>
   </div>
 
   <div id="tl-child" class="leaf">
     <button class="back" data-back="timeline">← 타임라인으로</button>
     <div class="page-header"><div class="icon-big">👶</div><div><h2>유아기</h2><span class="crumb">6.1 ~2010</span></div></div>
-    <div class="content-block"><p>어린 시절의 기억, 가족과의 이야기, 그 시절의 소중한 순간들을 기록하는 공간입니다.</p></div>
+    <div class="content-block"><div class="cb-text">어린 시절의 기억, 가족과의 이야기, 그 시절의 소중한 순간들을 기록하는 공간입니다.</div></div>
   </div>
 
   <div id="tl-youth" class="leaf">
     <button class="back" data-back="timeline">← 타임라인으로</button>
     <div class="page-header"><div class="icon-big">🌤️</div><div><h2>청년기</h2><span class="crumb">6.2 ~2020</span></div></div>
-    <div class="content-block"><p>배움과 도전, 성장의 시간들을 되돌아보는 공간입니다.</p></div>
+    <div class="content-block"><div class="cb-text">배움과 도전, 성장의 시간들을 되돌아보는 공간입니다.</div></div>
   </div>
 
   <div id="tl-adult" class="leaf">
     <button class="back" data-back="timeline">← 타임라인으로</button>
     <div class="page-header"><div class="icon-big">🌟</div><div><h2>성년기</h2><span class="crumb">6.3 2021~</span></div></div>
-    <div class="content-block"><p>지금 이 순간부터 만들어가는 이야기를 기록하는 공간입니다.</p></div>
+    <div class="content-block"><div class="cb-text">지금 이 순간부터 만들어가는 이야기를 기록하는 공간입니다.</div></div>
   </div>
 
 </main>
@@ -621,6 +647,44 @@
 
   document.querySelectorAll('[data-back]').forEach(btn => {
     btn.addEventListener('click', () => showView(btn.dataset.back));
+  });
+
+  /* ---------- Toast ---------- */
+  function toast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    clearTimeout(t._timer);
+    t._timer = setTimeout(() => t.classList.remove('show'), 1200);
+  }
+
+  /* ---------- Editable content blocks (click to write, auto-saved) ---------- */
+  const CONTENT_KEY = 'sync-content-blocks';
+  let contentData = {};
+  try { contentData = JSON.parse(localStorage.getItem(CONTENT_KEY) || '{}'); } catch (e) { contentData = {}; }
+
+  leaves.forEach(leaf => {
+    const texts = leaf.querySelectorAll('.cb-text');
+    texts.forEach((el, idx) => {
+      const key = leaf.id + '-' + idx;
+      el.setAttribute('data-key', key);
+      el.setAttribute('contenteditable', 'true');
+      el.setAttribute('spellcheck', 'false');
+      if (contentData[key] !== undefined) {
+        el.textContent = contentData[key];
+      }
+      el.addEventListener('blur', () => {
+        contentData[key] = el.textContent;
+        localStorage.setItem(CONTENT_KEY, JSON.stringify(contentData));
+        toast('저장됨 ✓');
+      });
+      el.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' && !e.shiftKey) {
+          e.preventDefault();
+          el.blur();
+        }
+      });
+    });
   });
 
   /* ---------- Daily Log calendar logic ---------- */
@@ -713,6 +777,7 @@
     entries[selectedDate] = { mood: selectedMood || '📝', memo: memoInput.value.trim() };
     localStorage.setItem(STORAGE_KEY, JSON.stringify(entries));
     renderCalendar();
+    toast('저장됨 ✓');
   });
 
   document.getElementById('deleteEntry').addEventListener('click', () => {
