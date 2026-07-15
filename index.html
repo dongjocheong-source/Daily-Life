@@ -1,0 +1,1359 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>싱크님의 일상</title>
+<script src="https://accounts.google.com/gsi/client" async defer></script>
+<style>
+  :root {
+    --bg: #f6f3ec;
+    --sidebar: #1f2937;
+    --sidebar-hover: #2b3648;
+    --sidebar-text: #cbd3df;
+    --card: #ffffff;
+    --accent: #c9915a;
+    --accent2: #6b8f7a;
+    --text: #2b2a27;
+    --muted: #8a877f;
+    --border: #e8e3da;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    display: flex;
+    min-height: 100vh;
+  }
+
+  /* ---------- Sidebar ---------- */
+  .sidebar {
+    width: 270px;
+    flex-shrink: 0;
+    background: var(--sidebar);
+    color: var(--sidebar-text);
+    padding: 28px 0;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow-y: auto;
+  }
+  .brand {
+    padding: 0 26px 24px;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    margin-bottom: 14px;
+    cursor: pointer;
+    transition: opacity 0.15s ease;
+  }
+  .brand:hover { opacity: 0.85; }
+  .brand h1 { font-size: 1.2rem; color: #fff; letter-spacing: -0.3px; }
+  .brand p { margin-top: 6px; font-size: 0.76rem; color: #8f97a6; }
+  .drive-sync {
+    padding: 0 26px 16px; border-bottom: 1px solid rgba(255,255,255,0.08); margin-bottom: 14px;
+  }
+  .drive-sync button {
+    width: 100%; background: none; border: 1px solid rgba(255,255,255,0.18);
+    color: var(--sidebar-text); border-radius: 8px; padding: 8px 10px;
+    font-size: 0.78rem; cursor: pointer; transition: all 0.15s ease;
+  }
+  .drive-sync button:hover { color: #fff; border-color: var(--accent); }
+  .drive-sync button.connected { border-color: var(--accent2); color: #fff; }
+  .drive-status { font-size: 0.7rem; color: #8f97a6; margin-top: 8px; line-height: 1.5; }
+  .nav-group { margin-bottom: 2px; }
+  .nav-head {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 11px 26px;
+    cursor: pointer;
+    font-size: 0.92rem;
+    font-weight: 600;
+    color: #fff;
+    transition: background 0.15s ease;
+  }
+  .nav-head:hover { background: var(--sidebar-hover); }
+  .nav-head.current { background: var(--sidebar-hover); }
+  .nav-head .num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 21px;
+    height: 21px;
+    border-radius: 6px;
+    background: var(--accent);
+    color: #fff;
+    font-size: 0.72rem;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+  .nav-head .chev {
+    margin-left: auto;
+    font-size: 0.68rem;
+    color: #8f97a6;
+    transition: transform 0.2s ease;
+  }
+  .nav-group.open .nav-head .chev { transform: rotate(90deg); }
+  .nav-sub { max-height: 0; overflow: hidden; transition: max-height 0.25s ease; }
+  .nav-group.open .nav-sub { max-height: 400px; }
+  .nav-sub button, .nav-sub a {
+    display: block;
+    width: 100%;
+    text-align: left;
+    background: none;
+    border: none;
+    color: var(--sidebar-text);
+    font-size: 0.83rem;
+    padding: 8px 26px 8px 52px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background 0.15s ease, color 0.15s ease;
+  }
+  .nav-sub button:hover, .nav-sub a:hover { background: var(--sidebar-hover); color: #fff; }
+  .nav-sub button.active { background: var(--sidebar-hover); color: var(--accent); font-weight: 600; }
+
+  /* ---------- Main ---------- */
+  main { flex: 1; padding: 44px 52px; max-width: 1000px; }
+  .hero {
+    background: linear-gradient(135deg, #2c3e50 0%, #4a6b5a 100%);
+    color: #fff;
+    border-radius: 20px;
+    padding: 36px 40px;
+    margin-bottom: 32px;
+  }
+  .hero h2 { font-size: 1.5rem; font-weight: 700; line-height: 1.4; }
+  .hero p { margin-top: 8px; color: rgba(255,255,255,0.75); font-size: 0.9rem; }
+
+  .section-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin: 28px 0 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .section-title .badge {
+    background: var(--accent);
+    color: #fff;
+    font-size: 0.7rem;
+    padding: 3px 9px;
+    border-radius: 20px;
+    font-weight: 700;
+  }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 14px;
+  }
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 22px 20px;
+    cursor: pointer;
+    transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+  }
+  .card:hover { transform: translateY(-4px); box-shadow: 0 10px 24px rgba(0,0,0,0.07); border-color: var(--accent); }
+  a.card { display: block; text-decoration: none; color: inherit; }
+  .card .icon { font-size: 1.5rem; margin-bottom: 8px; display: block; }
+  .card h3 { font-size: 0.98rem; margin-bottom: 4px; }
+  .card p { font-size: 0.8rem; color: var(--muted); }
+
+  /* leaf pages */
+  .leaf { display: none; }
+  .leaf.active { display: block; }
+  .leaf .back {
+    display: inline-flex; align-items: center; gap: 6px;
+    color: var(--accent); background: none; border: none;
+    font-size: 0.87rem; cursor: pointer; margin-bottom: 20px;
+  }
+  .leaf .page-header { display: flex; align-items: center; gap: 14px; margin-bottom: 22px; }
+  .leaf .page-header .icon-big {
+    font-size: 1.9rem; background: var(--card); border: 1px solid var(--border);
+    border-radius: 14px; width: 54px; height: 54px;
+    display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  }
+  .leaf .page-header h2 { font-size: 1.35rem; }
+  .leaf .page-header span.crumb { color: var(--muted); font-size: 0.84rem; }
+
+  .view { display: none; }
+  .view.active { display: block; }
+
+  /* ---------- Toast ---------- */
+  #toast {
+    position: fixed; top: 20px; right: 24px; background: #2b2a27; color: #fff;
+    padding: 8px 16px; border-radius: 8px; font-size: 0.82rem;
+    opacity: 0; transform: translateY(-8px);
+    transition: opacity 0.2s ease, transform 0.2s ease;
+    pointer-events: none; z-index: 999;
+  }
+  #toast.show { opacity: 1; transform: translateY(0); }
+
+  .btn-primary {
+    background: var(--accent); color: #fff; border: none; border-radius: 8px;
+    padding: 9px 18px; font-size: 0.85rem; cursor: pointer; font-weight: 600;
+  }
+  .btn-ghost {
+    background: none; border: 1px solid var(--border); border-radius: 8px;
+    padding: 9px 18px; font-size: 0.85rem; cursor: pointer; color: var(--muted);
+  }
+
+  /* ---------- Posts (글쓰기) ---------- */
+  .posts-toolbar { display: flex; justify-content: flex-end; margin-bottom: 16px; }
+  .post-form-slot:empty { display: none; }
+  .post-card {
+    background: var(--card); border: 1px solid var(--border); border-radius: 16px;
+    padding: 20px 22px; margin-bottom: 14px;
+  }
+  .post-category {
+    display: inline-block; font-size: 0.72rem; font-weight: 700; color: var(--accent2);
+    background: #eef2ec; padding: 3px 10px; border-radius: 20px; margin-bottom: 10px;
+  }
+  .post-row1 { display: flex; gap: 14px; align-items: baseline; margin-bottom: 10px; }
+  .post-topic {
+    flex: 0 0 25%; font-size: 0.82rem; font-weight: 700; color: var(--accent);
+    overflow-wrap: break-word;
+  }
+  .post-title { flex: 1; font-size: 1.02rem; font-weight: 700; color: var(--text); }
+  .post-content { color: #4b4a45; font-size: 0.9rem; line-height: 1.75; white-space: pre-wrap; word-break: break-word; }
+  .post-content a { color: var(--accent); text-decoration: underline; word-break: break-all; }
+  .post-actions { margin-top: 12px; display: flex; justify-content: flex-end; }
+  .attach-btn-row { margin: 12px 0; }
+  .post-attachments { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+  .att-chip {
+    display: flex; align-items: center; gap: 6px; background: var(--bg);
+    border: 1px solid var(--border); border-radius: 10px; padding: 5px 10px;
+    font-size: 0.78rem; color: var(--text); text-decoration: none; max-width: 220px;
+  }
+  a.att-chip:hover { border-color: var(--accent); }
+  .att-thumb { width: 26px; height: 26px; object-fit: cover; border-radius: 6px; flex-shrink: 0; }
+  .att-name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .att-del {
+    border: none; background: none; color: var(--muted); cursor: pointer;
+    font-size: 0.85rem; padding: 0 2px; line-height: 1;
+  }
+  .att-del:hover { color: #c0392b; }
+  .btn-ghost.danger:hover { color: #c0392b; border-color: #c0392b; }
+  .post-form {
+    background: #fffaf2; border: 1px dashed var(--accent); border-radius: 16px;
+    padding: 20px 22px; margin-bottom: 14px;
+  }
+  .post-form .post-row1 { margin-bottom: 12px; align-items: stretch; }
+  .post-topic-input, .post-title-input {
+    border: 1px solid var(--border); border-radius: 8px; padding: 9px 12px;
+    font-size: 0.88rem; font-family: inherit;
+  }
+  .post-topic-input { flex: 0 0 25%; }
+  .post-title-input { flex: 1; font-weight: 600; }
+  .post-content-input {
+    width: 100%; min-height: 90px; border: 1px solid var(--border); border-radius: 8px;
+    padding: 10px 12px; font-size: 0.88rem; font-family: inherit; resize: vertical; margin-bottom: 12px;
+  }
+  .post-form-actions { display: flex; gap: 8px; justify-content: flex-end; }
+  .posts-empty { color: var(--muted); font-size: 0.86rem; padding: 8px 2px; }
+
+  /* ---------- Daily Log (interactive) ---------- */
+  .log-wrap { display: grid; grid-template-columns: 1.3fr 1fr; gap: 24px; align-items: start; }
+  .cal-card {
+    background: var(--card); border: 1px solid var(--border); border-radius: 18px; padding: 22px;
+  }
+  .cal-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
+  .cal-header h3 { font-size: 1.05rem; }
+  .cal-nav { display: flex; gap: 6px; }
+  .cal-nav button {
+    border: 1px solid var(--border); background: #fff; border-radius: 8px; width: 30px; height: 30px;
+    cursor: pointer; font-size: 0.9rem; color: var(--text);
+  }
+  .cal-nav button:hover { border-color: var(--accent); color: var(--accent); }
+  .cal-today-btn {
+    border: 1px solid var(--border); background: #fff; border-radius: 8px; padding: 5px 12px;
+    font-size: 0.78rem; cursor: pointer; color: var(--muted);
+  }
+  .cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px; }
+  .cal-dow { text-align: center; font-size: 0.74rem; color: var(--muted); padding: 4px 0 8px; font-weight: 600; }
+  .cal-day {
+    aspect-ratio: 1; border-radius: 10px; border: 1px solid transparent;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    cursor: pointer; font-size: 0.82rem; color: var(--text); position: relative; background: #fbf9f5;
+    gap: 2px;
+  }
+  .cal-day:hover { border-color: var(--accent); }
+  .cal-day.blank { background: transparent; cursor: default; }
+  .cal-day.today { border-color: var(--accent2); font-weight: 700; }
+  .cal-day.selected { background: var(--accent); color: #fff; }
+  .cal-day .mood { font-size: 0.75rem; }
+  .editor-card {
+    background: var(--card); border: 1px solid var(--border); border-radius: 18px; padding: 22px;
+  }
+  .editor-card h4 { font-size: 0.95rem; margin-bottom: 4px; }
+  .editor-card .sel-date { color: var(--muted); font-size: 0.8rem; margin-bottom: 14px; }
+  .mood-row { display: flex; gap: 8px; margin-bottom: 14px; flex-wrap: wrap; }
+  .mood-row button {
+    border: 1px solid var(--border); background: #fff; border-radius: 10px; width: 38px; height: 38px;
+    font-size: 1.1rem; cursor: pointer;
+  }
+  .mood-row button.sel { border-color: var(--accent); background: #fbeee1; }
+  .mood-row button { position: relative; }
+  .mood-row button::after {
+    content: attr(data-tip);
+    position: absolute;
+    bottom: 120%;
+    left: 50%;
+    transform: translateX(-50%) translateY(4px);
+    background: #2b2a27;
+    color: #fff;
+    font-size: 0.7rem;
+    padding: 4px 9px;
+    border-radius: 6px;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.15s ease, transform 0.15s ease;
+    z-index: 10;
+  }
+  .mood-row button:hover::after {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+  .editor-card textarea {
+    width: 100%; min-height: 80px; border: 1px solid var(--border); border-radius: 10px;
+    padding: 10px 12px; font-size: 0.88rem; font-family: inherit; resize: vertical; margin-bottom: 12px;
+  }
+  .editor-actions { display: flex; gap: 8px; }
+  @media (max-width: 760px) { .log-wrap { grid-template-columns: 1fr; } }
+
+  /* ---------- Timeline ---------- */
+  .timeline { position: relative; padding-left: 30px; }
+  .timeline::before {
+    content: ""; position: absolute; left: 8px; top: 6px; bottom: 6px; width: 2px; background: var(--border);
+  }
+  .tl-item { position: relative; margin-bottom: 20px; cursor: pointer; }
+  .tl-item::before {
+    content: ""; position: absolute; left: -30px; top: 4px; width: 14px; height: 14px;
+    border-radius: 50%; background: var(--accent); border: 3px solid var(--bg);
+  }
+  .tl-card {
+    background: var(--card); border: 1px solid var(--border); border-radius: 14px;
+    padding: 18px 20px; transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+  }
+  .tl-item:hover .tl-card { transform: translateX(4px); box-shadow: 0 8px 18px rgba(0,0,0,0.06); border-color: var(--accent); }
+  .tl-card .tl-period { font-size: 0.76rem; color: var(--accent); font-weight: 700; margin-bottom: 4px; }
+  .tl-card h3 { font-size: 1rem; margin-bottom: 4px; }
+  .tl-card p { font-size: 0.83rem; color: var(--muted); }
+
+  @media (max-width: 800px) {
+    body { flex-direction: column; }
+    .sidebar { width: 100%; height: auto; position: relative; }
+    main { padding: 30px 18px; }
+    .post-row1 { flex-direction: column; }
+    .post-topic-input, .post-title-input { flex: 1; }
+  }
+</style>
+</head>
+<body>
+
+<div id="toast"></div>
+
+<aside class="sidebar">
+  <div class="brand" id="brandHome" title="데일리 로그로 이동">
+    <h1>싱크님의 일상</h1>
+    <p>기록 · 일상 · 관심사 · 투자 · 은퇴</p>
+  </div>
+
+  <div class="drive-sync">
+    <button id="driveSignInBtn">☁️ 구글 드라이브 연동</button>
+    <div class="drive-status" id="driveStatus">로그인하면 기기 간 동기화됩니다</div>
+  </div>
+
+  <div class="nav-group" data-group="g1">
+    <div class="nav-head" data-view="dailylog">
+      <span class="num">1</span>
+      <span>데일리 로그</span>
+    </div>
+  </div>
+
+  <div class="nav-group" data-group="g2">
+    <div class="nav-head" data-view="happy">
+      <span class="num">2</span><span>일상의 행복</span><span class="chev">▶</span>
+    </div>
+    <div class="nav-sub">
+      <button data-target="happy-book">2.1 품위있는 즐거움 (책과 함께)</button>
+      <button data-target="happy-music">2.2 품위있는 즐거움 (음악과 함께)</button>
+    </div>
+  </div>
+
+  <div class="nav-group" data-group="g3">
+    <div class="nav-head" data-view="enjoy">
+      <span class="num">3</span><span>인조이더라이프</span><span class="chev">▶</span>
+    </div>
+    <div class="nav-sub">
+      <button data-target="enjoy-hiking">3.1 산행 정보</button>
+      <button data-target="enjoy-domestic">3.2 국내 여행</button>
+      <button data-target="enjoy-abroad">3.3 해외 여행</button>
+      <button data-target="enjoy-food">3.4 맛집 정보</button>
+    </div>
+  </div>
+
+  <div class="nav-group" data-group="g4">
+    <div class="nav-head" data-view="interest">
+      <span class="num">4</span><span>나의 관심사</span><span class="chev">▶</span>
+    </div>
+    <div class="nav-sub">
+      <button data-target="interest1">4.1 공부 하는것</button>
+      <button data-target="interest2">4.2 아래는 어떨까?</button>
+    </div>
+  </div>
+
+  <div class="nav-group" data-group="g5">
+    <div class="nav-head" data-view="invest">
+      <span class="num">5</span><span>투자정보</span><span class="chev">▶</span>
+    </div>
+    <div class="nav-sub">
+      <button data-target="inv-safe">5.1 안정자산 투자</button>
+      <button data-target="inv-gold">5.2 금/은투자</button>
+      <button data-target="inv-us">5.3 미국 투자</button>
+      <button data-target="inv-cn">5.4 중국 투자</button>
+      <button data-target="inv-kr">5.5 한국 투자</button>
+    </div>
+  </div>
+
+  <div class="nav-group" data-group="g6">
+    <div class="nav-head" data-view="retire">
+      <span class="num">6</span><span>은퇴준비</span><span class="chev">▶</span>
+    </div>
+    <div class="nav-sub">
+      <button data-target="ret-pension">6.1 연금설계</button>
+      <button data-target="ret-secondact">6.2 2막 인생 준비</button>
+      <button data-target="ret-wish">6.3 은퇴후 하고싶은거..</button>
+    </div>
+  </div>
+
+  <div class="nav-group" data-group="g7">
+    <div class="nav-head" data-view="timeline">
+      <span class="num">7</span><span>타임라인</span><span class="chev">▶</span>
+    </div>
+    <div class="nav-sub">
+      <button data-target="tl-child">7.1 유아기(~2010)</button>
+      <button data-target="tl-youth">7.2 청년기(~2020)</button>
+      <button data-target="tl-adult">7.3 성년기(2021~)</button>
+    </div>
+  </div>
+</aside>
+
+<main>
+
+  <!-- ===== 1. 데일리 로그 (interactive, 홈 화면) ===== -->
+  <div id="view-dailylog" class="view active">
+    <div class="hero">
+      <h2>데일리 로그</h2>
+      <p>날짜별 짧은 기록 — 오늘 한 일, 기분, 한 줄 메모</p>
+    </div>
+    <div class="log-wrap">
+      <div class="cal-card">
+        <div class="cal-header">
+          <h3 id="calMonthLabel">2026년 7월</h3>
+          <div style="display:flex; gap:8px; align-items:center;">
+            <button class="cal-today-btn" id="calToday">오늘</button>
+            <div class="cal-nav">
+              <button id="calPrev">‹</button>
+              <button id="calNext">›</button>
+            </div>
+          </div>
+        </div>
+        <div class="cal-grid" id="calGrid"></div>
+      </div>
+      <div class="editor-card">
+        <h4>기록 남기기</h4>
+        <div class="sel-date" id="selDateLabel">날짜를 선택하세요</div>
+        <div class="mood-row" id="moodRow">
+          <button data-mood="😊" data-tip="행복">😊</button>
+          <button data-mood="🙂" data-tip="좋음">🙂</button>
+          <button data-mood="😐" data-tip="보통">😐</button>
+          <button data-mood="😔" data-tip="우울">😔</button>
+          <button data-mood="😴" data-tip="피곤">😴</button>
+          <button data-mood="🔥" data-tip="열정">🔥</button>
+          <button data-mood="😠" data-tip="화남">😠</button>
+        </div>
+        <textarea id="memoInput" maxlength="120" placeholder="오늘 한 일, 기분을 한 줄로 남겨보세요"></textarea>
+        <div class="editor-actions">
+          <button class="btn-primary" id="saveEntry">저장</button>
+          <button class="btn-ghost" id="deleteEntry">삭제</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== 2. 일상의 행복 ===== -->
+  <div id="view-happy" class="view">
+    <div class="hero">
+      <h2>진정한 행복은<br>일상의 행복으로부터...</h2>
+      <p>품위 있게 즐기는 하루하루의 기록</p>
+    </div>
+
+    <div class="section-title"><span class="badge">2.1–2.2</span> 품위있는 즐거움</div>
+    <div class="grid">
+      <div class="card" data-target="happy-book"><span class="icon">📖</span><h3>책과 함께</h3><p>읽고 있는 책과 서평</p></div>
+      <div class="card" data-target="happy-music"><span class="icon">🎵</span><h3>음악과 함께</h3><p>플레이리스트와 공연 후기</p></div>
+    </div>
+  </div>
+
+  <!-- ===== 3. 인조이더라이프 ===== -->
+  <div id="view-enjoy" class="view">
+    <div class="hero" style="background:linear-gradient(135deg,#2c3e50 0%,#6b8f7a 100%);">
+      <h2>인조이더라이프</h2>
+      <p>걷고 떠나고 맛보는 순간들의 기록</p>
+    </div>
+    <div class="grid">
+      <div class="card" data-target="enjoy-hiking"><span class="icon">⛰️</span><h3>산행 정보</h3><p>등산 코스와 준비물</p></div>
+      <div class="card" data-target="enjoy-domestic"><span class="icon">🚗</span><h3>국내 여행</h3><p>국내 여행 계획과 후기</p></div>
+      <div class="card" data-target="enjoy-abroad"><span class="icon">✈️</span><h3>해외 여행</h3><p>해외 여행 계획과 후기</p></div>
+      <div class="card" data-target="enjoy-food"><span class="icon">🍜</span><h3>맛집 정보</h3><p>다녀온 맛집과 추천 메뉴</p></div>
+    </div>
+  </div>
+
+  <!-- ===== 4. 나의 관심사 ===== -->
+  <div id="view-interest" class="view">
+    <div class="hero" style="background:linear-gradient(135deg,#3b3b58 0%,#7a5c3b 100%);">
+      <h2>나의 관심사</h2>
+      <p>배우고, 만들고, 길러보는 새로운 즐거움들</p>
+    </div>
+
+    <div class="section-title"><span class="badge">4.1</span> 공부 하는것</div>
+    <div class="grid">
+      <div class="card" data-target="interest1"><span class="icon">🤖</span><h3>AI 스터디</h3><p>공부 기록과 실습 노트</p></div>
+      <div class="card" data-target="interest1"><span class="icon">🚁</span><h3>드론의 재미</h3><p>드론 입문 정보와 체험기</p></div>
+    </div>
+
+    <div class="section-title"><span class="badge">4.2</span> 아래는 어떨까?</div>
+    <div class="grid">
+      <div class="card" data-target="interest2"><span class="icon">🔨</span><h3>공방</h3><p>목공, 공예 등 손으로 만드는 것</p></div>
+      <div class="card" data-target="interest2"><span class="icon">🌳</span><h3>나무키우기</h3><p>분재, 정원수 가꾸기</p></div>
+    </div>
+  </div>
+
+  <!-- ===== 5. 투자정보 ===== -->
+  <div id="view-invest" class="view">
+    <div class="hero" style="background:linear-gradient(135deg,#2c3e50 0%,#8a6d3b 100%);">
+      <h2>투자정보</h2>
+      <p>자산을 지키고 불려나가는 기록</p>
+    </div>
+    <div class="grid">
+      <div class="card" data-target="inv-safe"><span class="icon">🛡️</span><h3>안정자산 투자</h3><p>예금, 채권 등 안전자산 정보</p></div>
+      <div class="card" data-target="inv-gold"><span class="icon">🥇</span><h3>금/은투자</h3><p>귀금속 시장 동향과 정보</p></div>
+      <div class="card" data-target="inv-us"><span class="icon">🇺🇸</span><h3>미국 투자</h3><p>미국 주식, ETF 정보</p></div>
+      <div class="card" data-target="inv-cn"><span class="icon">🇨🇳</span><h3>중국 투자</h3><p>중국 시장 동향과 정보</p></div>
+      <div class="card" data-target="inv-kr"><span class="icon">🇰🇷</span><h3>한국 투자</h3><p>국내 주식, 펀드 정보</p></div>
+    </div>
+  </div>
+
+  <!-- ===== 6. 은퇴준비 ===== -->
+  <div id="view-retire" class="view">
+    <div class="hero" style="background:linear-gradient(135deg,#3b3b58 0%,#6b8f7a 100%);">
+      <h2>은퇴준비</h2>
+      <p>은퇴 이후의 삶을 미리 그려봅니다</p>
+    </div>
+    <div class="grid">
+      <div class="card" data-target="ret-pension"><span class="icon">💰</span><h3>연금설계</h3><p>재무 계획과 연금 정보</p></div>
+      <div class="card" data-target="ret-secondact"><span class="icon">🌱</span><h3>2막 인생 준비</h3><p>새로운 도전과 계획</p></div>
+      <div class="card" data-target="ret-wish"><span class="icon">🏡</span><h3>은퇴후 하고싶은거..</h3><p>버킷리스트와 하고 싶은 일들</p></div>
+    </div>
+  </div>
+
+  <!-- ===== 7. 타임라인 ===== -->
+  <div id="view-timeline" class="view">
+    <div class="hero" style="background:linear-gradient(135deg,#4a3b58 0%,#c9915a 100%);">
+      <h2>타임라인</h2>
+      <p>지나온 시간, 걸어온 길</p>
+    </div>
+    <div class="timeline">
+      <div class="tl-item" data-target="tl-child">
+        <div class="tl-card">
+          <div class="tl-period">~2010</div>
+          <h3>👶 유아기</h3>
+          <p>어린 시절의 기억과 이야기</p>
+        </div>
+      </div>
+      <div class="tl-item" data-target="tl-youth">
+        <div class="tl-card">
+          <div class="tl-period">~2020</div>
+          <h3>🌤️ 청년기</h3>
+          <p>배움과 도전으로 채워진 시간</p>
+        </div>
+      </div>
+      <div class="tl-item" data-target="tl-adult">
+        <div class="tl-card">
+          <div class="tl-period">2021~</div>
+          <h3>🌟 성년기</h3>
+          <p>지금 이 순간, 만들어가는 이야기</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== LEAF PAGES : 글쓰기(주제/제목/내용) 형식, 추가·수정 가능 ===== -->
+  <div id="happy-book" class="leaf">
+    <button class="back" data-back="happy">← 목록으로</button>
+    <div class="page-header"><div class="icon-big">📖</div><div><h2>책과 함께</h2><span class="crumb">2.1 품위있는 즐거움 (책과 함께)</span></div></div>
+    <div class="posts-app" data-leaf="happy-book" data-seed='[{"topic":"소개","title":"책과 함께","content":"읽고 있는 책, 인상 깊은 문장, 서평을 기록하는 공간입니다."}]'></div>
+  </div>
+
+  <div id="happy-music" class="leaf">
+    <button class="back" data-back="happy">← 목록으로</button>
+    <div class="page-header"><div class="icon-big">🎵</div><div><h2>음악과 함께</h2><span class="crumb">2.2 품위있는 즐거움 (음악과 함께)</span></div></div>
+    <div class="posts-app" data-leaf="happy-music" data-seed='[{"topic":"소개","title":"음악과 함께","content":"즐겨 듣는 음악과 플레이리스트, 공연 후기를 남기는 공간입니다."}]'></div>
+  </div>
+
+  <div id="enjoy-hiking" class="leaf">
+    <button class="back" data-back="enjoy">← 목록으로</button>
+    <div class="page-header"><div class="icon-big">⛰️</div><div><h2>산행 정보</h2><span class="crumb">3.1 인조이더라이프</span></div></div>
+    <div class="posts-app" data-leaf="enjoy-hiking" data-seed='[{"topic":"소개","title":"산행 정보","content":"등산 코스, 준비물, 다녀온 산 기록을 정리하는 공간입니다."}]'></div>
+  </div>
+
+  <div id="enjoy-domestic" class="leaf">
+    <button class="back" data-back="enjoy">← 목록으로</button>
+    <div class="page-header"><div class="icon-big">🚗</div><div><h2>국내 여행</h2><span class="crumb">3.2 인조이더라이프</span></div></div>
+    <div class="posts-app" data-leaf="enjoy-domestic" data-seed='[{"topic":"소개","title":"국내 여행","content":"국내 여행 계획과 후기를 남기는 공간입니다."}]'></div>
+  </div>
+
+  <div id="enjoy-abroad" class="leaf">
+    <button class="back" data-back="enjoy">← 목록으로</button>
+    <div class="page-header"><div class="icon-big">✈️</div><div><h2>해외 여행</h2><span class="crumb">3.3 인조이더라이프</span></div></div>
+    <div class="posts-app" data-leaf="enjoy-abroad" data-seed='[{"topic":"소개","title":"해외 여행","content":"해외 여행 계획과 후기를 남기는 공간입니다."}]'></div>
+  </div>
+
+  <div id="enjoy-food" class="leaf">
+    <button class="back" data-back="enjoy">← 목록으로</button>
+    <div class="page-header"><div class="icon-big">🍜</div><div><h2>맛집 정보</h2><span class="crumb">3.4 인조이더라이프</span></div></div>
+    <div class="posts-app" data-leaf="enjoy-food" data-seed='[{"topic":"소개","title":"맛집 정보","content":"다녀온 맛집, 추천 메뉴, 위치 정보를 기록하는 공간입니다."}]'></div>
+  </div>
+
+  <div id="interest1" class="leaf">
+    <button class="back" data-back="interest">← 목록으로</button>
+    <div class="page-header"><div class="icon-big">🤖</div><div><h2>공부 하는것</h2><span class="crumb">4.1 AI 스터디 · 드론의 재미</span></div></div>
+    <div class="posts-app" data-leaf="interest1" data-seed='[{"topic":"드론","title":"드론의 재미","content":"드론 입문 정보와 체험기를 담는 공간입니다."},{"topic":"AI","title":"AI 스터디","content":"AI 관련 공부 기록, 강의 노트, 실습 프로젝트를 정리하는 공간입니다."}]'></div>
+  </div>
+
+  <div id="interest2" class="leaf">
+    <button class="back" data-back="interest">← 목록으로</button>
+    <div class="page-header"><div class="icon-big">🔨</div><div><h2>아래는 어떨까?</h2><span class="crumb">4.2 공방 · 나무키우기</span></div></div>
+    <div class="posts-app" data-leaf="interest2" data-seed='[{"topic":"나무","title":"나무키우기","content":"분재, 정원수 등 나무를 가꾸는 이야기를 담는 공간입니다."},{"topic":"공방","title":"공방","content":"목공, 공예 등 손으로 무언가 만드는 활동에 관한 기록 공간입니다."}]'></div>
+  </div>
+
+  <div id="inv-safe" class="leaf">
+    <button class="back" data-back="invest">← 목록으로</button>
+    <div class="page-header"><div class="icon-big">🛡️</div><div><h2>안정자산 투자</h2><span class="crumb">5.1 Safe Assets</span></div></div>
+    <div class="posts-app" data-leaf="inv-safe" data-seed='[{"topic":"소개","title":"안정자산 투자","content":"예금, 채권, MMF 등 안전자산 관련 정보와 투자 아이디어를 기록하는 공간입니다."}]'></div>
+  </div>
+
+  <div id="inv-gold" class="leaf">
+    <button class="back" data-back="invest">← 목록으로</button>
+    <div class="page-header"><div class="icon-big">🥇</div><div><h2>금/은투자</h2><span class="crumb">5.2 Gold &amp; Silver</span></div></div>
+    <div class="posts-app" data-leaf="inv-gold" data-seed='[{"topic":"소개","title":"금/은투자","content":"금, 은 등 귀금속 시장 동향과 투자 아이디어를 기록하는 공간입니다."}]'></div>
+  </div>
+
+  <div id="inv-us" class="leaf">
+    <button class="back" data-back="invest">← 목록으로</button>
+    <div class="page-header"><div class="icon-big">🇺🇸</div><div><h2>미국 투자</h2><span class="crumb">5.3 US Market</span></div></div>
+    <div class="posts-app" data-leaf="inv-us" data-seed='[{"topic":"소개","title":"미국 투자","content":"미국 주식, ETF, 시장 동향과 개인적인 투자 아이디어를 기록하는 공간입니다."}]'></div>
+  </div>
+
+  <div id="inv-cn" class="leaf">
+    <button class="back" data-back="invest">← 목록으로</button>
+    <div class="page-header"><div class="icon-big">🇨🇳</div><div><h2>중국 투자</h2><span class="crumb">5.4 CN Market</span></div></div>
+    <div class="posts-app" data-leaf="inv-cn" data-seed='[{"topic":"소개","title":"중국 투자","content":"중국 증시와 관련 산업 동향, 투자 아이디어를 기록하는 공간입니다."}]'></div>
+  </div>
+
+  <div id="inv-kr" class="leaf">
+    <button class="back" data-back="invest">← 목록으로</button>
+    <div class="page-header"><div class="icon-big">🇰🇷</div><div><h2>한국 투자</h2><span class="crumb">5.5 KR Market</span></div></div>
+    <div class="posts-app" data-leaf="inv-kr" data-seed='[{"topic":"소개","title":"한국 투자","content":"국내 주식, 펀드, 시장 동향과 개인적인 투자 아이디어를 기록하는 공간입니다."}]'></div>
+  </div>
+
+  <div id="ret-pension" class="leaf">
+    <button class="back" data-back="retire">← 목록으로</button>
+    <div class="page-header"><div class="icon-big">💰</div><div><h2>연금설계</h2><span class="crumb">6.1 Pension Plan</span></div></div>
+    <div class="posts-app" data-leaf="ret-pension" data-seed='[{"topic":"소개","title":"연금설계","content":"국민연금, 퇴직연금, 개인연금 등 은퇴 후 현금흐름을 위한 연금 설계를 정리하는 공간입니다."}]'></div>
+  </div>
+
+  <div id="ret-secondact" class="leaf">
+    <button class="back" data-back="retire">← 목록으로</button>
+    <div class="page-header"><div class="icon-big">🌱</div><div><h2>2막 인생 준비</h2><span class="crumb">6.2 Second Act</span></div></div>
+    <div class="posts-app" data-leaf="ret-secondact" data-seed='[{"topic":"소개","title":"2막 인생 준비","content":"은퇴 이후 하고 싶은 일, 새로운 도전에 대한 기록입니다."}]'></div>
+  </div>
+
+  <div id="ret-wish" class="leaf">
+    <button class="back" data-back="retire">← 목록으로</button>
+    <div class="page-header"><div class="icon-big">🏡</div><div><h2>은퇴후 하고싶은거..</h2><span class="crumb">6.3 Bucket List</span></div></div>
+    <div class="posts-app" data-leaf="ret-wish" data-seed='[{"topic":"소개","title":"은퇴후 하고싶은거..","content":"은퇴 후 해보고 싶은 일들, 버킷리스트를 자유롭게 적어보는 공간입니다."}]'></div>
+  </div>
+
+  <div id="tl-child" class="leaf">
+    <button class="back" data-back="timeline">← 타임라인으로</button>
+    <div class="page-header"><div class="icon-big">👶</div><div><h2>유아기</h2><span class="crumb">7.1 ~2010</span></div></div>
+    <div class="posts-app" data-leaf="tl-child" data-seed='[{"topic":"소개","title":"유아기","content":"어린 시절의 기억, 가족과의 이야기, 그 시절의 소중한 순간들을 기록하는 공간입니다."}]'></div>
+  </div>
+
+  <div id="tl-youth" class="leaf">
+    <button class="back" data-back="timeline">← 타임라인으로</button>
+    <div class="page-header"><div class="icon-big">🌤️</div><div><h2>청년기</h2><span class="crumb">7.2 ~2020</span></div></div>
+    <div class="posts-app" data-leaf="tl-youth" data-seed='[{"topic":"소개","title":"청년기","content":"배움과 도전, 성장의 시간들을 되돌아보는 공간입니다."}]'></div>
+  </div>
+
+  <div id="tl-adult" class="leaf">
+    <button class="back" data-back="timeline">← 타임라인으로</button>
+    <div class="page-header"><div class="icon-big">🌟</div><div><h2>성년기</h2><span class="crumb">7.3 2021~</span></div></div>
+    <div class="posts-app" data-leaf="tl-adult" data-seed='[{"topic":"소개","title":"성년기","content":"지금 이 순간부터 만들어가는 이야기를 기록하는 공간입니다."}]'></div>
+  </div>
+
+</main>
+
+<script>
+  const views = document.querySelectorAll('.view');
+  const leaves = document.querySelectorAll('.leaf');
+  const navGroups = document.querySelectorAll('.nav-group');
+  const navHeads = document.querySelectorAll('.nav-head');
+  const subButtons = document.querySelectorAll('.nav-sub button');
+
+  function clearActiveNav() {
+    navHeads.forEach(h => h.classList.remove('current'));
+    subButtons.forEach(b => b.classList.remove('active'));
+  }
+
+  function showView(id) {
+    views.forEach(v => v.classList.remove('active'));
+    leaves.forEach(l => l.classList.remove('active'));
+    document.getElementById('view-' + id).classList.add('active');
+    clearActiveNav();
+    const head = document.querySelector('.nav-head[data-view="' + id + '"]');
+    if (head) head.classList.add('current');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function showLeaf(id) {
+    views.forEach(v => v.classList.remove('active'));
+    leaves.forEach(l => l.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    clearActiveNav();
+    const btn = document.querySelector('.nav-sub button[data-target="' + id + '"]');
+    if (btn) btn.classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  document.getElementById('brandHome').addEventListener('click', () => showView('dailylog'));
+
+  navHeads.forEach(head => {
+    head.addEventListener('click', () => {
+      const group = head.closest('.nav-group');
+      const hasSub = group.querySelector('.nav-sub');
+      if (hasSub) {
+        const isOpen = group.classList.contains('open');
+        navGroups.forEach(g => g.classList.remove('open'));
+        if (!isOpen) group.classList.add('open');
+      }
+      showView(head.dataset.view);
+    });
+  });
+
+  document.querySelectorAll('.card[data-target], .tl-item[data-target]').forEach(el => {
+    el.addEventListener('click', () => showLeaf(el.dataset.target));
+  });
+
+  subButtons.forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      showLeaf(btn.dataset.target);
+    });
+  });
+
+  document.querySelectorAll('[data-back]').forEach(btn => {
+    btn.addEventListener('click', () => showView(btn.dataset.back));
+  });
+
+  /* ---------- Toast ---------- */
+  function toast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    clearTimeout(t._timer);
+    t._timer = setTimeout(() => t.classList.remove('show'), 1200);
+  }
+
+  /* ---------- Google Drive 동기화 ---------- */
+  const DRIVE_CLIENT_ID = '750043756582-f31juqku9v5ck0aff1ccesu0i3crscdr.apps.googleusercontent.com';
+  const DRIVE_SCOPE = 'https://www.googleapis.com/auth/drive.file';
+  const DRIVE_FILE_NAME = 'sync-life-data.json';
+
+  let accessToken = null;
+  let driveFileId = null;
+  let tokenClient = null;
+  let driveSyncing = false;
+
+  const driveSignInBtn = document.getElementById('driveSignInBtn');
+  const driveStatus = document.getElementById('driveStatus');
+
+  function setDriveStatus(msg) { driveStatus.textContent = msg; }
+
+  function ensureTokenClient() {
+    if (tokenClient) return tokenClient;
+    if (!window.google || !google.accounts || !google.accounts.oauth2) return null;
+    tokenClient = google.accounts.oauth2.initTokenClient({
+      client_id: DRIVE_CLIENT_ID,
+      scope: DRIVE_SCOPE,
+      callback: (resp) => {
+        if (resp.error) { setDriveStatus('로그인에 실패했습니다.'); return; }
+        accessToken = resp.access_token;
+        driveSignInBtn.textContent = '🔄 지금 동기화';
+        driveSignInBtn.classList.add('connected');
+        pullFromDrive(true);
+      }
+    });
+    return tokenClient;
+  }
+
+  async function driveFindFile() {
+    const q = encodeURIComponent(`name='${DRIVE_FILE_NAME}' and trashed=false`);
+    const res = await fetch(`https://www.googleapis.com/drive/v3/files?q=${q}&fields=files(id,name,modifiedTime)`, {
+      headers: { Authorization: 'Bearer ' + accessToken }
+    });
+    if (!res.ok) throw new Error('drive find failed');
+    const data = await res.json();
+    return (data.files && data.files[0]) || null;
+  }
+
+  async function driveDownload(fileId) {
+    const res = await fetch(`https://www.googleapis.com/drive/v3/files/${fileId}?alt=media`, {
+      headers: { Authorization: 'Bearer ' + accessToken }
+    });
+    if (!res.ok) throw new Error('drive download failed');
+    return res.json();
+  }
+
+  async function driveUpload(content, fileId) {
+    const boundary = 'sync_boundary_' + Date.now();
+    const metadata = { name: DRIVE_FILE_NAME, mimeType: 'application/json' };
+    const body =
+      `--${boundary}\r\nContent-Type: application/json; charset=UTF-8\r\n\r\n${JSON.stringify(metadata)}\r\n` +
+      `--${boundary}\r\nContent-Type: application/json\r\n\r\n${JSON.stringify(content)}\r\n` +
+      `--${boundary}--`;
+    const url = fileId
+      ? `https://www.googleapis.com/upload/drive/v3/files/${fileId}?uploadType=multipart`
+      : `https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart`;
+    const res = await fetch(url, {
+      method: fileId ? 'PATCH' : 'POST',
+      headers: {
+        Authorization: 'Bearer ' + accessToken,
+        'Content-Type': `multipart/related; boundary=${boundary}`
+      },
+      body
+    });
+    if (!res.ok) throw new Error('drive upload failed');
+    return res.json();
+  }
+
+  function getSyncPayload() {
+    return { posts: postsStore, dailyLog: entries, savedAt: new Date().toISOString() };
+  }
+
+  function applySyncPayload(payload) {
+    if (payload && payload.posts) {
+      postsStore = payload.posts;
+      localStorage.setItem(POSTS_KEY, JSON.stringify(postsStore));
+    }
+    if (payload && payload.dailyLog) {
+      entries = payload.dailyLog;
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(entries));
+    }
+    document.querySelectorAll('.posts-app').forEach(app => renderPostsApp(app));
+    renderCalendar();
+  }
+
+  async function pullFromDrive(isInitial) {
+    if (!accessToken || driveSyncing) return;
+    driveSyncing = true;
+    setDriveStatus('동기화 중...');
+    try {
+      const file = await driveFindFile();
+      if (file) {
+        driveFileId = file.id;
+        const payload = await driveDownload(file.id);
+        applySyncPayload(payload);
+        toast('드라이브와 동기화됨 ✓');
+      } else {
+        const result = await driveUpload(getSyncPayload(), null);
+        driveFileId = result.id;
+        toast('구글 드라이브에 저장 시작됨 ✓');
+      }
+      const now = new Date();
+      setDriveStatus('✓ 연결됨 · 마지막 동기화 ' + now.getHours() + ':' + String(now.getMinutes()).padStart(2, '0'));
+    } catch (e) {
+      console.error(e);
+      setDriveStatus('동기화 중 오류가 발생했습니다.');
+    } finally {
+      driveSyncing = false;
+    }
+  }
+
+  function pushToDrive() {
+    if (!accessToken) return;
+    driveUpload(getSyncPayload(), driveFileId)
+      .then(res => {
+        if (!driveFileId) driveFileId = res.id;
+        const now = new Date();
+        setDriveStatus('✓ 연결됨 · 마지막 동기화 ' + now.getHours() + ':' + String(now.getMinutes()).padStart(2, '0'));
+      })
+      .catch(err => {
+        console.error(err);
+        setDriveStatus('동기화 실패 (다음 저장 시 재시도)');
+      });
+  }
+
+  driveSignInBtn.addEventListener('click', () => {
+    if (accessToken) { pullFromDrive(false); return; }
+    const client = ensureTokenClient();
+    if (!client) { alert('구글 로그인 준비 중입니다. 잠시 후 다시 시도해주세요.'); return; }
+    client.requestAccessToken();
+  });
+
+  /* ---------- Posts (글쓰기: 주제/제목/내용, 추가·수정) ---------- */
+  const POSTS_KEY = 'sync-posts-v1';
+  let postsStore = {};
+  try { postsStore = JSON.parse(localStorage.getItem(POSTS_KEY) || '{}'); } catch (e) { postsStore = {}; }
+
+  function savePosts() {
+    try {
+      localStorage.setItem(POSTS_KEY, JSON.stringify(postsStore));
+      pushToDrive();
+    } catch (e) {
+      alert('저장 공간이 부족합니다. 첨부 파일 용량/개수를 줄여주세요.');
+    }
+  }
+  function uid() { return 'p' + Date.now().toString(36) + Math.random().toString(36).slice(2, 7); }
+
+  function escapeHtml(str) {
+    return String(str)
+      .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+  }
+
+  function linkify(text) {
+    const escaped = escapeHtml(text || '');
+    const urlRegex = /((https?:\/\/|www\.)[^\s<]+)/gi;
+    return escaped.replace(urlRegex, (match) => {
+      let href = match;
+      if (!/^https?:\/\//i.test(href)) href = 'https://' + href;
+      return '<a href="' + href + '" target="_blank" rel="noopener noreferrer">' + match + '</a>';
+    });
+  }
+
+  function isImageType(type) { return !!type && type.indexOf('image/') === 0; }
+
+  function buildAttachmentChip(att, onDelete) {
+    const isImg = isImageType(att.type);
+    const chip = document.createElement(onDelete ? 'div' : 'a');
+    chip.className = 'att-chip';
+    if (!onDelete) {
+      chip.href = att.dataUrl;
+      chip.target = '_blank';
+      chip.rel = 'noopener noreferrer';
+      chip.download = att.name || 'file';
+    }
+    if (isImg) {
+      const img = document.createElement('img');
+      img.className = 'att-thumb';
+      img.src = att.dataUrl;
+      chip.appendChild(img);
+    } else {
+      const icon = document.createElement('span');
+      icon.textContent = '📄';
+      chip.appendChild(icon);
+    }
+    const nameEl = document.createElement('span');
+    nameEl.className = 'att-name';
+    nameEl.textContent = att.name || '파일';
+    chip.appendChild(nameEl);
+    if (onDelete) {
+      const delBtn = document.createElement('button');
+      delBtn.type = 'button';
+      delBtn.className = 'att-del';
+      delBtn.textContent = '✕';
+      delBtn.addEventListener('click', onDelete);
+      chip.appendChild(delBtn);
+    }
+    return chip;
+  }
+
+  function getCategory(app) {
+    const leaf = app.closest('.leaf');
+    const h2 = leaf ? leaf.querySelector('.page-header h2') : null;
+    return h2 ? h2.textContent.trim() : '';
+  }
+
+  function buildPostForm(initial, category) {
+    const form = document.createElement('div');
+    form.className = 'post-form';
+
+    if (category) {
+      const catEl = document.createElement('div');
+      catEl.className = 'post-category';
+      catEl.textContent = category;
+      form.appendChild(catEl);
+    }
+
+    const row1 = document.createElement('div');
+    row1.className = 'post-row1';
+    const topicInput = document.createElement('input');
+    topicInput.className = 'post-topic-input';
+    topicInput.placeholder = '주제';
+    topicInput.value = initial ? (initial.topic || '') : '';
+    const titleInput = document.createElement('input');
+    titleInput.className = 'post-title-input';
+    titleInput.placeholder = '제목';
+    titleInput.value = initial ? (initial.title || '') : '';
+    row1.appendChild(topicInput);
+    row1.appendChild(titleInput);
+
+    const contentInput = document.createElement('textarea');
+    contentInput.className = 'post-content-input';
+    contentInput.placeholder = '내용을 입력하세요 (URL을 포함하면 자동으로 링크가 됩니다)';
+    contentInput.value = initial ? (initial.content || '') : '';
+
+    /* ---- attachments (사진/파일 첨부 + 삭제) ---- */
+    const attachments = initial && Array.isArray(initial.attachments)
+      ? initial.attachments.map(a => Object.assign({}, a))
+      : [];
+
+    const attachRow = document.createElement('div');
+    attachRow.className = 'attach-btn-row';
+    const attachBtn = document.createElement('button');
+    attachBtn.type = 'button';
+    attachBtn.className = 'btn-ghost';
+    attachBtn.textContent = '📎 사진/파일 첨부';
+    const fileInput = document.createElement('input');
+    fileInput.type = 'file';
+    fileInput.multiple = true;
+    fileInput.accept = 'image/*,.pdf,.doc,.docx,.xls,.xlsx,.hwp,.txt,.zip';
+    fileInput.style.display = 'none';
+    attachBtn.addEventListener('click', () => fileInput.click());
+    attachRow.appendChild(attachBtn);
+    attachRow.appendChild(fileInput);
+
+    const attachPreview = document.createElement('div');
+    attachPreview.className = 'post-attachments';
+
+    function renderAttachPreview() {
+      attachPreview.innerHTML = '';
+      attachments.forEach((att, idx) => {
+        const chip = buildAttachmentChip(att, () => {
+          attachments.splice(idx, 1);
+          renderAttachPreview();
+        });
+        attachPreview.appendChild(chip);
+      });
+    }
+    renderAttachPreview();
+
+    fileInput.addEventListener('change', () => {
+      const files = Array.from(fileInput.files || []);
+      files.forEach(file => {
+        const reader = new FileReader();
+        reader.onload = () => {
+          attachments.push({ name: file.name, type: file.type, dataUrl: reader.result });
+          renderAttachPreview();
+        };
+        reader.readAsDataURL(file);
+      });
+      fileInput.value = '';
+    });
+
+    const actions = document.createElement('div');
+    actions.className = 'post-form-actions';
+    const saveBtn = document.createElement('button');
+    saveBtn.className = 'btn-primary';
+    saveBtn.textContent = '저장';
+    const cancelBtn = document.createElement('button');
+    cancelBtn.className = 'btn-ghost';
+    cancelBtn.textContent = '취소';
+    actions.appendChild(saveBtn);
+    actions.appendChild(cancelBtn);
+
+    form.appendChild(row1);
+    form.appendChild(contentInput);
+    form.appendChild(attachRow);
+    form.appendChild(attachPreview);
+    form.appendChild(actions);
+
+    return { form, topicInput, titleInput, contentInput, saveBtn, cancelBtn, attachments };
+  }
+
+  function renderPostCard(app, post) {
+    const card = document.createElement('div');
+    card.className = 'post-card';
+
+    const category = getCategory(app);
+    if (category) {
+      const catEl = document.createElement('div');
+      catEl.className = 'post-category';
+      catEl.textContent = category;
+      card.appendChild(catEl);
+    }
+
+    const row1 = document.createElement('div');
+    row1.className = 'post-row1';
+    const topicEl = document.createElement('div');
+    topicEl.className = 'post-topic';
+    topicEl.textContent = '주제: ' + (post.topic || '(없음)');
+    const titleEl = document.createElement('div');
+    titleEl.className = 'post-title';
+    titleEl.textContent = '제목: ' + (post.title || '(없음)');
+    row1.appendChild(topicEl);
+    row1.appendChild(titleEl);
+
+    const contentEl = document.createElement('div');
+    contentEl.className = 'post-content';
+    contentEl.innerHTML = linkify(post.content || '');
+
+    const actions = document.createElement('div');
+    actions.className = 'post-actions';
+    const editBtn = document.createElement('button');
+    editBtn.className = 'btn-ghost';
+    editBtn.textContent = '✏️ 수정';
+    editBtn.addEventListener('click', () => showEditForm(app, card, post));
+    const delBtn = document.createElement('button');
+    delBtn.className = 'btn-ghost danger';
+    delBtn.textContent = '🗑 삭제';
+    delBtn.addEventListener('click', () => {
+      if (confirm('정말 삭제하시겠습니까?')) {
+        const leafId = app.dataset.leaf;
+        postsStore[leafId] = (postsStore[leafId] || []).filter(p => p.id !== post.id);
+        savePosts();
+        toast('삭제됨');
+        renderPostsApp(app);
+      }
+    });
+    actions.appendChild(editBtn);
+    actions.appendChild(delBtn);
+
+    card.appendChild(row1);
+    card.appendChild(contentEl);
+
+    if (Array.isArray(post.attachments) && post.attachments.length) {
+      const attWrap = document.createElement('div');
+      attWrap.className = 'post-attachments';
+      post.attachments.forEach(att => attWrap.appendChild(buildAttachmentChip(att, null)));
+      card.appendChild(attWrap);
+    }
+
+    card.appendChild(actions);
+    return card;
+  }
+
+  function renderPostsApp(app) {
+    const leafId = app.dataset.leaf;
+    const posts = postsStore[leafId] || [];
+    app.innerHTML = '';
+
+    const toolbar = document.createElement('div');
+    toolbar.className = 'posts-toolbar';
+    const addBtn = document.createElement('button');
+    addBtn.className = 'btn-primary';
+    addBtn.textContent = '+ 새 글쓰기';
+    addBtn.addEventListener('click', () => showAddForm(app));
+    toolbar.appendChild(addBtn);
+    app.appendChild(toolbar);
+
+    const formSlot = document.createElement('div');
+    formSlot.className = 'post-form-slot';
+    app.appendChild(formSlot);
+
+    const list = document.createElement('div');
+    list.className = 'posts-list';
+    app.appendChild(list);
+
+    if (posts.length === 0) {
+      const empty = document.createElement('div');
+      empty.className = 'posts-empty';
+      empty.textContent = '아직 작성된 글이 없습니다. "+ 새 글쓰기"로 시작해보세요.';
+      list.appendChild(empty);
+    } else {
+      posts.forEach(post => list.appendChild(renderPostCard(app, post)));
+    }
+  }
+
+  function showAddForm(app) {
+    const leafId = app.dataset.leaf;
+    const slot = app.querySelector('.post-form-slot');
+    slot.innerHTML = '';
+    const { form, topicInput, titleInput, contentInput, saveBtn, cancelBtn, attachments } = buildPostForm(null, getCategory(app));
+    slot.appendChild(form);
+    topicInput.focus();
+
+    saveBtn.addEventListener('click', () => {
+      const topic = topicInput.value.trim();
+      const title = titleInput.value.trim();
+      const content = contentInput.value.trim();
+      if (!title && !content && attachments.length === 0) { alert('제목, 내용 또는 첨부파일을 추가해주세요.'); return; }
+      postsStore[leafId] = postsStore[leafId] || [];
+      postsStore[leafId].unshift({ id: uid(), topic, title, content, attachments });
+      savePosts();
+      toast('저장됨 ✓');
+      renderPostsApp(app);
+    });
+    cancelBtn.addEventListener('click', () => { slot.innerHTML = ''; });
+  }
+
+  function showEditForm(app, card, post) {
+    const { form, topicInput, titleInput, contentInput, saveBtn, cancelBtn, attachments } = buildPostForm(post, getCategory(app));
+    card.replaceWith(form);
+
+    saveBtn.addEventListener('click', () => {
+      post.topic = topicInput.value.trim();
+      post.title = titleInput.value.trim();
+      post.content = contentInput.value.trim();
+      post.attachments = attachments;
+      savePosts();
+      toast('저장됨 ✓');
+      renderPostsApp(app);
+    });
+    cancelBtn.addEventListener('click', () => { renderPostsApp(app); });
+  }
+
+  function initPostsApps() {
+    document.querySelectorAll('.posts-app').forEach(app => {
+      const leafId = app.dataset.leaf;
+      if (!postsStore[leafId]) {
+        let seed = [];
+        try { seed = JSON.parse(app.dataset.seed || '[]'); } catch (e) { seed = []; }
+        postsStore[leafId] = seed.map(s => ({ id: uid(), topic: s.topic, title: s.title, content: s.content }));
+        savePosts();
+      }
+      renderPostsApp(app);
+    });
+  }
+
+  initPostsApps();
+
+  /* ---------- Daily Log calendar logic ---------- */
+  const STORAGE_KEY = 'sync-daily-log-entries';
+  let entries = {};
+  try { entries = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}'); } catch (e) { entries = {}; }
+
+  let calDate = new Date();
+  let selectedDate = null;
+  let selectedMood = null;
+
+  const pad = n => String(n).padStart(2, '0');
+  const dateStr = d => `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
+
+  const calGrid = document.getElementById('calGrid');
+  const calMonthLabel = document.getElementById('calMonthLabel');
+  const selDateLabel = document.getElementById('selDateLabel');
+  const memoInput = document.getElementById('memoInput');
+  const moodRow = document.getElementById('moodRow');
+
+  function renderCalendar() {
+    const year = calDate.getFullYear();
+    const month = calDate.getMonth();
+    calMonthLabel.textContent = `${year}년 ${month + 1}월`;
+
+    calGrid.innerHTML = '';
+    ['일','월','화','수','목','금','토'].forEach(d => {
+      const el = document.createElement('div');
+      el.className = 'cal-dow';
+      el.textContent = d;
+      calGrid.appendChild(el);
+    });
+
+    const firstDay = new Date(year, month, 1);
+    const startOffset = firstDay.getDay();
+    const daysInMonth = new Date(year, month + 1, 0).getDate();
+    const todayStr = dateStr(new Date());
+
+    for (let i = 0; i < startOffset; i++) {
+      const blank = document.createElement('div');
+      blank.className = 'cal-day blank';
+      calGrid.appendChild(blank);
+    }
+
+    for (let d = 1; d <= daysInMonth; d++) {
+      const cellDate = new Date(year, month, d);
+      const cellStr = dateStr(cellDate);
+      const cell = document.createElement('div');
+      cell.className = 'cal-day';
+      if (cellStr === todayStr) cell.classList.add('today');
+      if (cellStr === selectedDate) cell.classList.add('selected');
+
+      const num = document.createElement('div');
+      num.textContent = d;
+      cell.appendChild(num);
+
+      if (entries[cellStr]) {
+        const mood = document.createElement('div');
+        mood.className = 'mood';
+        mood.textContent = entries[cellStr].mood || '•';
+        cell.appendChild(mood);
+      }
+
+      cell.addEventListener('click', () => selectDate(cellStr));
+      calGrid.appendChild(cell);
+    }
+  }
+
+  function selectDate(str) {
+    selectedDate = str;
+    const entry = entries[str];
+    selectedMood = entry ? entry.mood : null;
+    selDateLabel.textContent = str + ' 기록';
+    memoInput.value = entry ? entry.memo : '';
+    document.querySelectorAll('#moodRow button').forEach(b => {
+      b.classList.toggle('sel', b.dataset.mood === selectedMood);
+    });
+    renderCalendar();
+  }
+
+  moodRow.querySelectorAll('button').forEach(b => {
+    b.addEventListener('click', () => {
+      selectedMood = b.dataset.mood;
+      moodRow.querySelectorAll('button').forEach(x => x.classList.toggle('sel', x === b));
+    });
+  });
+
+  document.getElementById('saveEntry').addEventListener('click', () => {
+    if (!selectedDate) { alert('먼저 날짜를 선택해주세요.'); return; }
+    entries[selectedDate] = { mood: selectedMood || '📝', memo: memoInput.value.trim() };
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(entries));
+    pushToDrive();
+    renderCalendar();
+    toast('저장됨 ✓');
+  });
+
+  document.getElementById('deleteEntry').addEventListener('click', () => {
+    if (!selectedDate) return;
+    delete entries[selectedDate];
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(entries));
+    pushToDrive();
+    memoInput.value = '';
+    selectedMood = null;
+    moodRow.querySelectorAll('button').forEach(b => b.classList.remove('sel'));
+    renderCalendar();
+  });
+
+  document.getElementById('calPrev').addEventListener('click', () => {
+    calDate.setMonth(calDate.getMonth() - 1);
+    renderCalendar();
+  });
+  document.getElementById('calNext').addEventListener('click', () => {
+    calDate.setMonth(calDate.getMonth() + 1);
+    renderCalendar();
+  });
+  document.getElementById('calToday').addEventListener('click', () => {
+    calDate = new Date();
+    selectDate(dateStr(new Date()));
+  });
+
+  renderCalendar();
+  showView('dailylog');
+</script>
+
+</body>
+</html>
