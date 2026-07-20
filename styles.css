@@ -88,7 +88,6 @@ body {
   font-weight: 700;
   flex-shrink: 0;
 }
-.nav-head.home-link .num { background: var(--accent2); font-size: 0.85rem; }
 .nav-head .chev {
   margin-left: auto;
   font-size: 0.68rem;
