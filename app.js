@@ -165,12 +165,16 @@ async function pullFromSupabase() {
   }
 }
 
+let lastPushedAt = null; // 내가 방금 올린 변경인지 구분하기 위한 타임스탬프
+
 async function pushToSupabase() {
   if (!sb || !currentUser) return;
   try {
+    const updatedAt = new Date().toISOString();
+    lastPushedAt = updatedAt;
     const { error } = await sb
       .from('app_data')
-      .upsert({ user_id: currentUser.id, data: getSyncPayload(), updated_at: new Date().toISOString() });
+      .upsert({ user_id: currentUser.id, data: getSyncPayload(), updated_at: updatedAt });
     if (error) throw error;
     setAuthStatus('✓ 연결됨 · 마지막 동기화 ' + nowTimeLabel());
   } catch (e) {
@@ -179,10 +183,49 @@ async function pushToSupabase() {
   }
 }
 
+/* ---------- 다른 기기에서 저장한 내용을 실시간으로 받아오기 ---------- */
+let realtimeChannel = null;
+
+function subscribeRealtime() {
+  if (!sb || !currentUser) return;
+  unsubscribeRealtime();
+  realtimeChannel = sb
+    .channel('app_data_changes_' + currentUser.id)
+    .on(
+      'postgres_changes',
+      { event: '*', schema: 'public', table: 'app_data', filter: 'user_id=eq.' + currentUser.id },
+      (payload) => {
+        const row = payload.new;
+        if (!row || !row.data) return;
+        // 내 기기가 방금 올린 변경의 메아리는 무시 (시각 차이가 2초 이내면 같은 변경으로 간주)
+        if (row.updated_at && lastPushedAt) {
+          const diff = Math.abs(new Date(row.updated_at).getTime() - new Date(lastPushedAt).getTime());
+          if (diff < 2000) return;
+        }
+        applySyncPayload(row.data);
+        toast('다른 기기의 변경사항을 받아왔어요 ✓');
+        setAuthStatus('✓ 연결됨 · 마지막 동기화 ' + nowTimeLabel());
+      }
+    )
+    .subscribe();
+}
+
+function unsubscribeRealtime() {
+  if (sb && realtimeChannel) {
+    sb.removeChannel(realtimeChannel);
+    realtimeChannel = null;
+  }
+}
+
 function handleSession(session) {
   currentUser = session ? session.user : null;
   updateAuthUI();
-  if (currentUser) pullFromSupabase();
+  if (currentUser) {
+    pullFromSupabase();
+    subscribeRealtime();
+  } else {
+    unsubscribeRealtime();
+  }
 }
 
 async function initAuth() {
@@ -194,6 +237,15 @@ async function initAuth() {
   handleSession(data.session);
   sb.auth.onAuthStateChange((_event, session) => handleSession(session));
 }
+
+// 실시간 구독이 끊겼거나 지원되지 않는 환경을 대비해,
+// 화면(탭/앱)으로 돌아올 때마다 한 번 더 최신 데이터를 받아옵니다.
+document.addEventListener('visibilitychange', () => {
+  if (document.visibilityState === 'visible' && currentUser) pullFromSupabase();
+});
+window.addEventListener('focus', () => {
+  if (currentUser) pullFromSupabase();
+});
 
 if (authSendLinkBtn) {
   authSendLinkBtn.addEventListener('click', async () => {
