@@ -99,6 +99,13 @@
       <button data-target="tl-adult">7.3 성년기(2021~)</button>
     </div>
   </div>
+
+  <div class="nav-group" data-group="g8">
+    <div class="nav-head" data-view="videos">
+      <span class="num">8</span>
+      <span>추천동영상</span>
+    </div>
+  </div>
 </aside>
 
 <main>
@@ -297,6 +304,72 @@
     </div>
   </div>
 
+  <!-- ===== 8. 추천동영상 ===== -->
+  <div id="view-videos" class="view">
+    <div class="video-app">
+      <div class="wrap">
+
+        <div class="cat-header">
+          <div>
+            <h1>추천 동영상 링크</h1>
+            <p>서브카테고리를 만들고 주제별 동영상을 추가·수정하세요. 변경 내용은 자동 저장됩니다.</p>
+          </div>
+          <div style="display:flex;gap:8px;">
+            <button class="btn ghost sm" id="exportBtn">데이터 내보내기</button>
+          </div>
+        </div>
+
+        <div class="subtabs" id="subtabs"></div>
+
+        <div class="playlist" id="playlist"></div>
+      </div>
+
+      <!-- 서브카테고리 모달 -->
+      <div class="modal-bg" id="subModalBg">
+        <div class="modal">
+          <h3 id="subModalTitle">서브카테고리 추가</h3>
+          <p class="sub">재생목록의 대표 정보를 입력하세요.</p>
+          <form id="subForm">
+            <div class="field"><label>서브카테고리 이름 *</label><input name="title" required placeholder="예: TOSS INSIGHT | 토스 인사이트"></div>
+            <div class="field"><label>게시자</label><input name="author" placeholder="예: 토스"></div>
+            <div class="field"><label>설명 / 요약</label><input name="summary" placeholder="예: 재생목록 · 동영상 7개"></div>
+            <div class="field"><label>대표 카드 문구</label><input name="coverCaption" placeholder="대표 카드 위에 표시할 문구"></div>
+            <div class="field"><label>대표 카드 썸네일 URL</label><input name="cover" placeholder="https://... (비우면 파란 배경)"><div class="hint">비워두면 그라데이션 배경으로 표시됩니다.</div></div>
+          </form>
+          <div class="modal-foot">
+            <button class="btn danger" id="subDeleteBtn" style="display:none;">이 서브카테고리 삭제</button>
+            <div class="right">
+              <button class="btn ghost" data-close>취소</button>
+              <button class="btn primary" id="subSaveBtn">완료</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 동영상 모달 -->
+      <div class="modal-bg" id="vidModalBg">
+        <div class="modal">
+          <h3 id="vidModalTitle">동영상 추가</h3>
+          <p class="sub">동영상 정보를 입력하고 완료를 누르세요.</p>
+          <form id="vidForm">
+            <div class="field"><label>제목 *</label><input name="title" required placeholder="동영상 제목"></div>
+            <div class="field"><label>동영상 링크(URL) *</label><input name="url" required placeholder="https://www.youtube.com/watch?v=..."><div class="hint">간단보기 클릭 시 이 링크로 이동해 재생됩니다.</div></div>
+            <div class="field"><label>메타 정보</label><input name="meta" placeholder="예: 토스 · 조회수 23만회 · 3년 전"></div>
+            <div class="field"><label>재생시간</label><input name="duration" placeholder="예: 30:13"></div>
+            <div class="field"><label>썸네일 URL</label><input name="thumb" placeholder="https://... (비우면 파란 배경)"><div class="hint">유튜브라면 링크를 넣으면 썸네일을 자동으로 시도합니다.</div></div>
+          </form>
+          <div class="modal-foot">
+            <button class="btn danger" id="vidDeleteBtn" style="display:none;">이 동영상 삭제</button>
+            <div class="right">
+              <button class="btn ghost" data-close>취소</button>
+              <button class="btn primary" id="vidSaveBtn">완료</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- ===== LEAF PAGES : 글쓰기(주제/제목/내용) 형식, 추가·수정 가능 ===== -->
   <div id="happy-book" class="leaf">
     <button class="back" data-back="happy">← 목록으로</button>
@@ -416,6 +489,7 @@
 
 <script src="config.js"></script>
 <script src="app.js"></script>
+<script src="videos.js"></script>
 
 </body>
 </html>
