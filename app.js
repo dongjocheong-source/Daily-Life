@@ -115,7 +115,11 @@ function updateAuthUI() {
 }
 
 function getSyncPayload() {
-  return { posts: postsStore, dailyLog: entries, savedAt: new Date().toISOString() };
+  const payload = { posts: postsStore, dailyLog: entries, savedAt: new Date().toISOString() };
+  if (window.VideoApp && typeof window.VideoApp.getState === 'function') {
+    payload.videos = window.VideoApp.getState();
+  }
+  return payload;
 }
 
 function applySyncPayload(payload) {
@@ -126,6 +130,9 @@ function applySyncPayload(payload) {
   if (payload && payload.dailyLog) {
     entries = payload.dailyLog;
     try { localStorage.setItem(STORAGE_KEY, JSON.stringify(entries)); } catch (e) { /* quota */ }
+  }
+  if (payload && payload.videos && window.VideoApp && typeof window.VideoApp.setState === 'function') {
+    window.VideoApp.setState(payload.videos);
   }
   document.querySelectorAll('.posts-app').forEach(app => renderPostsApp(app));
   renderCalendar();
