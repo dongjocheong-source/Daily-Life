@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>캐나다 서부 & 미국 남서부 - 12일 로드트립</title>
+  <style>
+    :root { --ink:#f7fbfc; --muted:#b9d5dc; --navy:#061c2b; --panel:rgba(6,35,52,.86); --teal:#63dce3; --orange:#ffb77d; }
+    * { box-sizing:border-box; }
+    body { margin:0; background:#e8eef0; color:var(--ink); font-family:"Malgun Gothic","Apple SD Gothic Neo","Noto Sans KR",Arial,sans-serif; }
+    main { display:grid; gap:28px; padding:28px; }
+    .slide { position:relative; isolation:isolate; overflow:hidden; width:min(1280px,100%); aspect-ratio:16/9; margin:auto; padding:62px 72px; background:linear-gradient(118deg,#031827 0 44%,#0d4052 44%,#94603d 100%); box-shadow:0 18px 48px rgba(16,37,48,.25); }
+    .slide::before { content:""; position:absolute; inset:0; z-index:-1; opacity:.9; background:radial-gradient(circle at 63% 54%,#43a2ac 0 2%,transparent 2.4%),radial-gradient(ellipse at 70% 68%,#0e7081 0 11%,transparent 11.4%),linear-gradient(149deg,transparent 0 41%,rgba(230,246,248,.74) 41.1% 42%,transparent 42.2%),linear-gradient(210deg,transparent 0 46%,#113f4a 46.2% 62%,transparent 62.3%),linear-gradient(158deg,transparent 0 68%,#7a402a 68.2% 77%,transparent 77.2%); }
+    .slide::after { content:""; position:absolute; inset:0; z-index:-1; background:linear-gradient(90deg,rgba(2,20,34,.94) 0 45%,rgba(3,27,41,.28) 68%,rgba(4,20,32,.1)); }
+    h1,h2,p { margin:0; }
+    h1 { font-size:clamp(30px,3.2vw,48px); line-height:1.18; letter-spacing:-.04em; }
+    .subtitle { margin-top:12px; font-size:clamp(17px,1.7vw,25px); font-weight:700; color:#93dce8; }
+    .route { margin-top:25px; color:#dbecee; font-size:clamp(13px,1.35vw,19px); letter-spacing:.02em; }
+    .pills { display:flex; gap:12px; margin-top:28px; flex-wrap:wrap; }
+    .pill { padding:10px 19px; border-radius:999px; font-weight:700; background:#147f85; }
+    .pill:nth-child(2) { background:#235f90; } .pill:nth-child(3) { background:#934d30; }
+    .grid { width:48%; margin-top:45px; }
+    h2 { font-size:21px; margin-bottom:20px; }
+    .trip-structure { display:grid; grid-template-columns:145px 1fr; gap:14px 16px; font-size:18px; align-items:center; }
+    .place { font-weight:800; color:var(--teal); } .place.us { color:var(--orange); }
+    .timeline { width:48%; margin-top:50px; }
+    .timeline-title { color:#9edce5; font-weight:800; letter-spacing:.07em; font-size:15px; }
+    .days { display:grid; grid-template-columns:1fr 1fr; gap:10px 28px; margin-top:20px; font-size:13.5px; }
+    .day { display:grid; grid-template-columns:36px 1fr; align-items:center; gap:2px; min-width:0; }
+    .day b { color:var(--teal); } .day:nth-child(n+7) b { color:var(--orange); }
+    .note { position:absolute; left:72px; bottom:28px; color:#c3dce1; font-size:13px; }
+    .itinerary { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin-top:36px; }
+    .day-card { min-height:115px; padding:16px; border-radius:14px; background:rgba(5,34,50,.86); border:1px solid rgba(139,219,226,.18); }
+    .day-card .num { display:block; margin-bottom:7px; color:var(--teal); font-size:13px; font-weight:800; letter-spacing:.07em; }
+    .day-card.us .num { color:var(--orange); }
+    .day-card strong { display:block; margin-bottom:5px; font-size:17px; }
+    .day-card span { display:block; color:#d4e6e9; font-size:13px; line-height:1.35; }
+    .two-col { display:grid; grid-template-columns:1fr 1fr; gap:38px; margin-top:44px; }
+    .panel { min-height:430px; padding:34px; border-radius:22px; background:var(--panel); }
+    .panel h2 { color:var(--teal); font-size:24px; }
+    .section-title { margin-top:32px; color:var(--orange); font-size:22px; font-weight:800; }
+    .points { display:grid; gap:22px; font-size:18px; line-height:1.4; }
+    .option { border-radius:16px; padding:24px 28px; margin-top:18px; background:rgba(31,85,118,.92); }
+    .option.warm { background:rgba(116,66,45,.88); }
+    .option strong { display:block; font-size:20px; margin-bottom:10px; }
+    .best { display:grid; grid-template-columns:130px 1fr; gap:16px; margin-top:28px; font-size:16px; }
+    .best strong { color:var(--orange); }
+    @media (max-width:800px) { main { padding:0; gap:16px; } .slide { aspect-ratio:auto; min-height:720px; padding:36px 28px; } .grid,.timeline { width:100%; } .timeline { margin-top:34px; } .two-col { grid-template-columns:1fr; gap:18px; } .panel { min-height:0; } .days { gap:9px 12px; font-size:11px; } .note { left:28px; bottom:18px; } }
+    @media print { body { background:white; } main { padding:0; gap:0; } .slide { width:100vw; height:56.25vw; box-shadow:none; break-after:page; } }
+  </style>
+</head>
+<body>
+  <main>
+    <section class="slide" aria-label="추천 12일 일정">
+      <h1>캐나다 서부 &amp; 미국 남서부</h1>
+      <p class="subtitle">추천 12일 로드트립 일정</p>
+      <p class="route">밴쿠버 · 캐나다 로키 · 라스베이거스 · 그랜드캐년</p>
+      <div class="pills"><span class="pill">총 12일</span><span class="pill">렌터카 2회</span><span class="pill">국경 이동 1회</span></div>
+      <div class="grid"><h2>여행 구성</h2><div class="trip-structure"><b class="place">밴쿠버</b><span>도시·근교 3일</span><b class="place">로키</b><span>밴프·레이크루이스·재스퍼 5일</span><b class="place us">라스베이거스</b><span>도시 2일</span><b class="place us">그랜드캐년</b><span>사우스림 1박·일출</span></div></div>
+      <div class="timeline"><p class="timeline-title">DAY-BY-DAY</p><p style="margin-top:16px;font-size:18px;line-height:1.55">1일차부터 12일차까지의 상세 일정은 다음 페이지에서 확인하세요.</p></div>
+      <p class="note">권장 항공권: 한국 → YVR / YYC → LAS / LAS → 한국</p>
+    </section>
+    <section class="slide" aria-label="Day-by-Day 상세 일정">
+      <h1>Day-by-Day 상세 일정</h1><p class="subtitle">이동시간을 과하게 늘리지 않는 12일 동선</p>
+      <div class="itinerary">
+        <article class="day-card"><span class="num">DAY 1</span><strong>밴쿠버 도착</strong><span>개스타운, 캐나다플레이스 산책</span></article>
+        <article class="day-card"><span class="num">DAY 2</span><strong>밴쿠버 핵심 관광</strong><span>스탠리파크, 그랜빌 아일랜드</span></article>
+        <article class="day-card"><span class="num">DAY 3</span><strong>밴쿠버 근교</strong><span>노스밴쿠버 또는 휘슬러 당일치기</span></article>
+        <article class="day-card"><span class="num">DAY 4</span><strong>로키 방면 이동</strong><span>렌터카 수령 후 캠루프스 또는 켈로나 1박</span></article>
+        <article class="day-card"><span class="num">DAY 5</span><strong>밴프</strong><span>밴프 타운, 보우 폭포, 곤돌라 또는 온천</span></article>
+        <article class="day-card"><span class="num">DAY 6</span><strong>레이크루이스</strong><span>레이크루이스와 모레인 레이크 중심 일정</span></article>
+        <article class="day-card"><span class="num">DAY 7</span><strong>재스퍼</strong><span>아이스필즈 파크웨이, 페이토 레이크, 컬럼비아 아이스필드</span></article>
+        <article class="day-card us"><span class="num">DAY 8</span><strong>라스베이거스 이동</strong><span>재스퍼에서 캘거리 이동 후 라스베이거스 항공편</span></article>
+        <article class="day-card us"><span class="num">DAY 9</span><strong>라스베이거스</strong><span>스트립, 벨라지오, 쇼 또는 야경</span></article>
+        <article class="day-card us"><span class="num">DAY 10</span><strong>그랜드캐년 사우스림</strong><span>렌터카 이동 후 매더 포인트 석양</span></article>
+        <article class="day-card us"><span class="num">DAY 11</span><strong>라스베이거스 복귀</strong><span>그랜드캐년 일출 후 후버댐 경유</span></article>
+        <article class="day-card us"><span class="num">DAY 12</span><strong>출국</strong><span>라스베이거스 출발</span></article>
+      </div>
+      <p class="note">숙박 권장: 밴쿠버 3박 · 캠루프스/켈로나 1박 · 밴프 2박 · 재스퍼 1박 · 라스베이거스 2박 · 그랜드캐년 1박</p>
+    </section>
+    <section class="slide" aria-label="예약과 옵션 안내">
+      <h1>예약 · 운전 · 일정 옵션</h1><p class="subtitle">여행 만족도를 좌우하는 실무 체크포인트</p>
+      <div class="two-col">
+        <div class="panel"><h2>출발 전 예약</h2><div class="points"><p>레이크루이스·모레인 레이크는 성수기 셔틀 또는 주차를 먼저 확보</p><p>그랜드캐년은 사우스림 또는 투사얀 1박을 우선 예약</p><p>항공은 다구간 항공권과 YYC → LAS 편도편을 따로 비교</p></div><p class="section-title">운전과 계절</p><div class="points" style="font-size:15px;gap:15px;margin-top:17px"><p>로키는 5월~10월이 가장 편합니다. 겨울·초봄에는 도로와 호수 접근을 재확인</p><p>아이스필즈 파크웨이는 사진 정차를 포함해 하루로 잡기</p><p>국립공원 운영, 도로 통제, 그랜드캐년 숙박은 출발 직전 공식 사이트 확인</p></div></div>
+        <div class="panel"><h2>일정 선택지</h2><div class="option"><strong>10일 압축</strong><span>밴쿠버 2박, 밴프 2박, 재스퍼 제외<br>그랜드캐년 1박은 유지</span></div><div class="option warm"><strong>13일 확장: 시애틀</strong><span>밴쿠버 다음에 2박 추가<br>시애틀 → 캘거리 항공 이동 후 로키 일정 연결<br>자연 풍경이 우선이면 시애틀 대신 로키 1박 추가</span></div><div class="best"><strong>추천 기준</strong><span>자연 중심 여행이라면 시애틀보다 로키 1박 추가를 추천</span></div></div>
+      </div>
+      <p class="note">공식 확인: Parks Canada · National Park Service</p>
+    </section>
+  </main>
+</body>
+</html>
