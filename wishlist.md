@@ -5,7 +5,9 @@
 ## [A] 여행 관련
 - 인천에서 부산까지, 633km 국토종주
   - 참고 사이트: https://www.brunchpost.co.kr/2025/05/From-Incheon-to-Busan-633km-Land.html?utm_source=chatgpt.com   
-- 인천에서 부산까지, 633km 국토종주
+- 와일드
+  - 세릴 스트레이드의 '와일드' - PCT에 도전한 내용에 대한 책
+  - 와일드: 4,285km를 걸으면서 그 절망을 뜨거운 성취의 희망으로 바꿔낸 쉐일 스트레이드의 자전적 소설
 ---
 
 ## [B] 노트
