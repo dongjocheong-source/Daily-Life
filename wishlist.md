@@ -12,9 +12,9 @@
   - 참고 사이트: https://blog.naver.com/skygentle01/224374737391
 ---
 
-## [B] 노트
-- B01_프롬프팅
-- B02_Skill References
+## [B] 영화
+- 와일드
+- ??
 
 ---
 
