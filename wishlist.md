@@ -4,7 +4,7 @@
 
 ## [A] 여행 관련
 - 인천에서 부산까지, 633km 국토종주
-  - ㅇ  
+  - 참고 사이트: https://www.brunchpost.co.kr/2025/05/From-Incheon-to-Busan-633km-Land.html?utm_source=chatgpt.com   
 - 인천에서 부산까지, 633km 국토종주
 ---
 
