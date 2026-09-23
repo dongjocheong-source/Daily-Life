@@ -20,6 +20,9 @@
 ---
 
 ## [C] 프로젝트
-- C01_MyWiki프로젝트
+-[AI,신의 탄생 인간의 종말],https://bit.ly/4cuc73W​
+-[듀얼 브레인] https://bit.ly/4mPIFJ8​
+
+C01_MyWiki프로젝트
 - C02_GoToAiNative
 
