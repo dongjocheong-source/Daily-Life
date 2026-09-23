@@ -19,7 +19,7 @@
 
 ---
 
-## [C] 프로젝트
+## [C] 읽어야할 책
 -[AI,신의 탄생 인간의 종말],https://bit.ly/4cuc73W​
 -[듀얼 브레인] https://bit.ly/4mPIFJ8​
 
